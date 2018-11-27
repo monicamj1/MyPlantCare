@@ -6,19 +6,296 @@
     android:layout_height="match_parent"
     tools:context=".MyPlantActivity">
 
+    <android.support.constraint.Guideline
+        android:id="@+id/limit_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.35" />
+
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/profileImage_view"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="24dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="24dp"
+        app:layout_constraintDimensionRatio="w,1:1"
+        app:layout_constraintEnd_toStartOf="@+id/limit_1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@color/Verde_Claro" />
+
+    <TextView
+        android:id="@+id/name_view"
+        android:layout_width="0dp"
+        android:layout_height="22dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="48dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="48dp"
+        android:layout_marginTop="24dp"
+        android:textColor="@color/Verde_Oscuro"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/limit_1"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Lola la flora" />
+
+    <TextView
+        android:id="@+id/cientific_view"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="48dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="48dp"
+        android:layout_marginTop="8dp"
+        android:textColor="@color/Rosita"
+        android:textSize="12sp"
+        android:textStyle="italic"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/limit_1"
+        app:layout_constraintTop_toBottomOf="@+id/name_view"
+        tools:text="Saintpaulia ionantha" />
+
+    <TextView
+        android:id="@+id/birthdayTitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="48dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="48dp"
+        android:layout_marginTop="16dp"
+        android:textColor="@color/Verde_Claro"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.335"
+        app:layout_constraintStart_toStartOf="@+id/limit_1"
+        app:layout_constraintTop_toBottomOf="@+id/cientific_view"
+        tools:text="Birthday" />
+
+    <TextView
+        android:id="@+id/birthday_view"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="48dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="48dp"
+        android:layout_marginTop="8dp"
+        android:textColor="@color/Verde_Oscuro"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/limit_1"
+        app:layout_constraintTop_toBottomOf="@+id/birthdayTitle"
+        tools:text="27/11/18" />
+
+    <Button
+        android:id="@+id/about_button"
+        android:layout_width="118dp"
+        android:layout_height="34dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:background="@color/Verde_Medio"
+        android:text="@string/AboutSpecie"
+        android:textColor="@color/Blanco"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/limit_1"
+        app:layout_constraintTop_toBottomOf="@+id/birthday_view"
+        tools:text="About Specie" />
+
+    <TextView
+        android:id="@+id/reminderTitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:textColor="@color/Verde_Claro"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/about_button"
+        tools:text="Watering reminder" />
+
+    <View
+        android:id="@+id/rule1"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginStart="16dp"
+        android:background="@color/Verde_Claro"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/reminderTitle" />
+
+    <View
+        android:id="@+id/rule2"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginStart="16dp"
+        android:background="@color/Verde_Claro"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/galleryTitle" />
+
+    <TextView
+        android:id="@+id/wateringTitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/WateringIn"
+        android:textColor="@color/Verde_Oscuro"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rule1" />
+
+    <TextView
+        android:id="@+id/watering_view"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
+        android:text="TextView"
+        android:textColor="@color/Verde_Oscuro"
+        app:layout_constraintBaseline_toBaselineOf="@+id/wateringTitle"
+        app:layout_constraintEnd_toStartOf="@+id/watering_btn"
+        app:layout_constraintStart_toEndOf="@+id/wateringTitle"
+        tools:text="3 days" />
+
+    <TextView
+        android:id="@+id/waterEveryTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:text="TextView"
+        android:textColor="@color/Verde_Medio"
+        android:textSize="12sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/wateringTitle"
+        tools:text="Water every " />
+
+    <TextView
+        android:id="@+id/waterDays_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="4dp"
+        android:layout_marginStart="4dp"
+        android:text="TextView"
+        android:textColor="@color/Verde_Medio"
+        android:textSize="12sp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/waterEveryTitle"
+        app:layout_constraintStart_toEndOf="@+id/waterEveryTitle"
+        tools:text="88" />
+
+    <TextView
+        android:id="@+id/daysTitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="4dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="4dp"
+        android:text="TextView"
+        android:textColor="@color/Verde_Medio"
+        android:textSize="12sp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/waterDays_view"
+        app:layout_constraintEnd_toStartOf="@+id/watering_btn"
+        app:layout_constraintStart_toEndOf="@+id/waterDays_view"
+        tools:text="days" />
+
+    <Button
+        android:id="@+id/watering_btn"
+        android:layout_width="71dp"
+        android:layout_height="71dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="8dp"
+        android:background="@color/Verde_Medio"
+        android:text="Button"
+        android:textColor="@color/Blanco"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rule1" />
+
+    <TextView
+        android:id="@+id/galleryTitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/Gallery"
+        android:textColor="@color/Verde_Claro"
+        android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@color/Blanco" />
+        app:layout_constraintTop_toBottomOf="@+id/watering_btn" />
+
+    <Button
+        android:id="@+id/addImage_btn"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:background="@color/Verde_Medio"
+        android:text="+"
+        android:textColor="@color/Blanco"
+        android:textSize="24sp"
+        app:layout_constraintDimensionRatio="w,1:1"
+        app:layout_constraintEnd_toStartOf="@+id/image1_view"
+        app:layout_constraintHorizontal_bias="0.6"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/galleryTitle" />
+
+    <ImageView
+        android:id="@+id/image1_view"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintDimensionRatio="w,1:1"
+        app:layout_constraintEnd_toStartOf="@+id/image2_view"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/addImage_btn"
+        app:layout_constraintTop_toBottomOf="@+id/galleryTitle"
+        app:srcCompat="@color/Verde_Oscuro" />
+
+    <ImageView
+        android:id="@+id/image2_view"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintDimensionRatio="w,1:1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/image1_view"
+        app:layout_constraintTop_toBottomOf="@+id/galleryTitle"
+        app:srcCompat="@color/Verde_Oscuro" />
+
 </android.support.constraint.ConstraintLayout>
