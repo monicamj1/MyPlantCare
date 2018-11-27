@@ -3,4 +3,9 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="Verde_Oscuro">#535e47</color>
+    <color name="Verde_Medio">#798c7d</color>
+    <color name="Verde_Claro">#909f88</color>
+    <color name="Rosita">#e3b7ac</color>
+    <color name="Blanco">#f0efed</color>
 </resources>
