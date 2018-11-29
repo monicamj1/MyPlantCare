@@ -8,4 +8,6 @@
     <string name="WaterEveryXDay2" >day</string>
     <string name="LastTimeWatered">Last time watered</string>
     <string name="Add">Add to my garden</string>
+    <string name="AboutSpice">About Specie</string>
+    <string name="Gallery">Gallery</string>
 </resources>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -11,22 +11,21 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.35" />
+        app:layout_constraintGuide_percent="0.41" />
 
-    <ImageView
-        android:id="@+id/profileImage_view"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginLeft="24dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="24dp"
-        app:layout_constraintDimensionRatio="w,1:1"
-        app:layout_constraintEnd_toStartOf="@+id/limit_1"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@color/Verde_Claro" />
+  <ImageView
+      android:id="@+id/profileImage_view"
+      android:layout_width="0dp"
+      android:layout_height="0dp"
+      android:layout_marginEnd="8dp"
+      android:layout_marginLeft="24dp"
+      android:layout_marginRight="8dp"
+      android:layout_marginStart="24dp"
+      android:layout_marginTop="24dp"
+      app:layout_constraintDimensionRatio="w,1:1"
+      app:layout_constraintEnd_toStartOf="@+id/limit_1"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/name_view"
@@ -93,24 +92,22 @@
         app:layout_constraintTop_toBottomOf="@+id/birthdayTitle"
         tools:text="27/11/18" />
 
-    <Button
-        android:id="@+id/about_button"
-        android:layout_width="118dp"
-        android:layout_height="34dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:background="@color/Verde_Medio"
-        android:text="@string/AboutSpecie"
-        android:textColor="@color/Blanco"
-        android:textSize="12sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="@+id/limit_1"
-        app:layout_constraintTop_toBottomOf="@+id/birthday_view"
-        tools:text="About Specie" />
+  <Button
+      android:id="@+id/about_button"
+      android:layout_width="118dp"
+      android:layout_height="42dp"
+      android:layout_marginEnd="16dp"
+      android:layout_marginLeft="8dp"
+      android:layout_marginRight="16dp"
+      android:layout_marginStart="8dp"
+      android:layout_marginTop="16dp"
+      android:text="@string/AboutSpice"
+      android:textColor="@color/Blanco"
+      android:textSize="12sp"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintHorizontal_bias="1.0"
+      app:layout_constraintStart_toStartOf="@+id/limit_1"
+      app:layout_constraintTop_toBottomOf="@+id/birthday_view" />
 
     <TextView
         android:id="@+id/reminderTitle"
@@ -121,12 +118,12 @@
         android:layout_marginRight="8dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
+        android:text="@string/WateringReminder"
         android:textColor="@color/Verde_Claro"
         android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/about_button"
-        tools:text="Watering reminder" />
+        app:layout_constraintTop_toBottomOf="@+id/about_button" />
 
     <View
         android:id="@+id/rule1"
@@ -162,7 +159,7 @@
         android:layout_marginLeft="16dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
-        android:text="@string/WateringIn"
+
         android:textColor="@color/Verde_Oscuro"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/rule1" />
@@ -189,7 +186,7 @@
         android:layout_marginLeft="16dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
-        android:text="TextView"
+        android:text="@string/WaterEveryXDay1"
         android:textColor="@color/Verde_Medio"
         android:textSize="12sp"
         app:layout_constraintStart_toStartOf="parent"
@@ -217,60 +214,58 @@
         android:layout_marginLeft="4dp"
         android:layout_marginRight="8dp"
         android:layout_marginStart="4dp"
-        android:text="TextView"
+        android:text="@string/WaterEveryXDay2"
         android:textColor="@color/Verde_Medio"
         android:textSize="12sp"
         app:layout_constraintBaseline_toBaselineOf="@+id/waterDays_view"
         app:layout_constraintEnd_toStartOf="@+id/watering_btn"
-        app:layout_constraintStart_toEndOf="@+id/waterDays_view"
-        tools:text="days" />
+        app:layout_constraintStart_toEndOf="@+id/waterDays_view" />
 
-    <Button
-        android:id="@+id/watering_btn"
-        android:layout_width="71dp"
-        android:layout_height="71dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginTop="8dp"
-        android:background="@color/Verde_Medio"
-        android:text="Button"
-        android:textColor="@color/Blanco"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/rule1" />
+  <Button
+      android:id="@+id/watering_btn"
+      android:layout_width="71dp"
+      android:layout_height="71dp"
+      android:layout_marginEnd="16dp"
+      android:layout_marginRight="16dp"
+      android:layout_marginTop="8dp"
+      android:text="Button"
+      android:textColor="@color/Blanco"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/rule1" />
 
-    <TextView
-        android:id="@+id/galleryTitle"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:text="@string/Gallery"
-        android:textColor="@color/Verde_Claro"
-        android:textSize="12sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/watering_btn" />
+  <TextView
+      android:id="@+id/galleryTitle"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_marginEnd="16dp"
+      android:layout_marginLeft="16dp"
+      android:layout_marginRight="16dp"
+      android:layout_marginStart="16dp"
+      android:layout_marginTop="8dp"
 
-    <Button
-        android:id="@+id/addImage_btn"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:background="@color/Verde_Medio"
-        android:text="+"
-        android:textColor="@color/Blanco"
-        android:textSize="24sp"
-        app:layout_constraintDimensionRatio="w,1:1"
-        app:layout_constraintEnd_toStartOf="@+id/image1_view"
-        app:layout_constraintHorizontal_bias="0.6"
-        app:layout_constraintHorizontal_chainStyle="packed"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/galleryTitle" />
+      android:text="@string/Gallery"
+      android:textColor="@color/Verde_Claro"
+      android:textSize="12sp"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/watering_btn" />
+
+  <Button
+      android:id="@+id/addImage_btn"
+      android:layout_width="0dp"
+      android:layout_height="0dp"
+      android:layout_marginLeft="16dp"
+      android:layout_marginStart="16dp"
+      android:layout_marginTop="8dp"
+      android:text="+"
+      android:textColor="@color/Blanco"
+      android:textSize="24sp"
+      app:layout_constraintDimensionRatio="w,1:1"
+      app:layout_constraintEnd_toStartOf="@+id/image1_view"
+      app:layout_constraintHorizontal_bias="0.6"
+      app:layout_constraintHorizontal_chainStyle="packed"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/galleryTitle" />
 
     <ImageView
         android:id="@+id/image1_view"
