@@ -1,5 +1,7 @@
 package com.example.monicamj1.myplantcare;
 
+import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -14,9 +16,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.request.target.ViewTarget;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -31,6 +38,7 @@ public class MyGardenActivity extends AppCompatActivity {
     FloatingActionButton searchadd_btn;
 
     public static final int ADD_PLANT = 1;
+    public static final int MY_PLANT = 2;
 
 
     @Override
@@ -102,16 +110,19 @@ public class MyGardenActivity extends AppCompatActivity {
         searchadd_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent add_intent = new Intent(this, AddPlantActivity.class);
-                startActivityForResult(add_intent, ADD_PLANT);
+               Intent intent = new Intent(this, AddPlantActivity.class);
+                startActivityForResult(intent, ADD_PLANT);
             }
         });
-    */
+        */
+
 
     }
 
     private void onPlantClick(int pos) {
-        Toast.makeText(this, String.format("Has clicado la planta %d", pos), Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(this, MyPlantActivity.class);
+        intent.putExtra("index", 3);
+        startActivityForResult(intent, MY_PLANT);
     }
 
     class ViewHolder extends RecyclerView.ViewHolder{
@@ -140,26 +151,31 @@ public class MyGardenActivity extends AppCompatActivity {
 
         public void bind(Plant item) {
             name_view.setText(item.getName());
-           // plantimage_view.setImageBitmap(item.getProfile());
+          /*
+           //TODO: Arreglar el problema del "this"
+           Glide.with(this)
+                    .load(item.getProfile())
+                    .apply(RequestOptions.circleCropTransform())
+                    .into(plantimage_view);*/
+
             name_view.setText(item.getName());
             reminder_view.setText("Watering in:");
 
-            //TODO: Calcular los días que quedan para regar
-            /*
-            Date last_date = item.getLast_watering_day();
+            //TODO: Calcular bien los días que quedan para regar
+
             DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
             Date date = new Date();
             System.out.println(dateFormat.format(date));
 
-            long diffTime = date.getTime() - last_date.getTime();
+            long diffTime = date.getTime() - item.getLast_watering_day().getTime();
             long diffDays = diffTime / (1000 * 60 * 60 * 24);
             int days = item.getReminder() - (int)diffDays;
             if(days <= 0){
                 days = 0;
             }
             ////////////////////////////////////////////////////
-            days_view.setText( days + " days");*/
-            days_view.setText( item.getReminder() + " days");
+            days_view.setText( days + " days");
+            //days_view.setText( item.getReminder() + " days");
             watered_btn.setText("Watered");
         }
     }
@@ -185,6 +201,21 @@ public class MyGardenActivity extends AppCompatActivity {
     }
 
 
+    protected void onActivityResult(int requestCode, int resultCode, Intent data){
+        switch(requestCode){
+            case ADD_PLANT:
+                if(resultCode == RESULT_OK){
+                    String name = data.getStringExtra("name");
+                    String specie = data.getStringExtra("specie");
+                    String webURL = data.getStringExtra("webUrl");
+                    String birthday = data.getStringExtra("birthday");
+                    String reminder = data.getStringExtra("reminder");
+                    String lastday = data.getStringExtra("lastday");
 
+
+                }
+
+        }
+    }
 
 }

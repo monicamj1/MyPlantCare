@@ -9,14 +9,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MyPlantActivity">
+        <activity android:name=".MyGardenActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity android:name=".AddPlantActivity"></activity>
-        <activity android:name=".MyGardenActivity" />
+        <activity android:name=".MyPlantActivity" />
     </application>
 
 </manifest>

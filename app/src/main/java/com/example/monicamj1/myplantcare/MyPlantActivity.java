@@ -3,6 +3,9 @@ package com.example.monicamj1.myplantcare;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -65,8 +68,28 @@ public class MyPlantActivity extends AppCompatActivity {
 
 
         if(intent != null){
-            //namePlant = intent.getStringArrayExtra("number");
+            //namePlant = intent.getStringArrayExtra("index");
         }
+
+
+    }
+
+    public boolean onCreateOptionsMenu(Menu menu){
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.myplant_menu, menu);
+        return true;
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item){
+        switch(item.getItemId()){
+            case R.id.edit_plant:
+                //TODO: llamar a la actividad AddPlantActivity y pasarle la planta para rellenar los campos
+                break;
+            case R.id.delete_plant:
+                //TODO: borrar planta de la lista de plantas
+                break;
+        }
+        return true;
     }
 
 

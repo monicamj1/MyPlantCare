@@ -10,4 +10,6 @@
     <string name="Add">Add to my garden</string>
     <string name="AboutSpice">About Specie</string>
     <string name="Gallery">Gallery</string>
+    <string name="EditPlant">Edit plant</string>
+    <string name="Delete">Delete</string>
 </resources>
