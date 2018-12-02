@@ -73,25 +73,6 @@ public class MyGardenActivity extends AppCompatActivity {
                 new Date(2018,11,18), null,
                 "http://www.mijardin.es/wp-content/uploads/2017/01/cultivar-la-planta-del-dinero.jpg"));
 
-        myplant_list.add(new Plant("Pepe el cactus", "Desconocido", "",
-                new Date(2018,11,18), 4,
-                new Date(2018,11,18), null,
-                "http://www.mijardin.es/wp-content/uploads/2017/01/cultivar-la-planta-del-dinero.jpg"));
-
-        myplant_list.add(new Plant("Pepe el cactus", "Desconocido", "",
-                new Date(2018,11,18), 4,
-                new Date(2018,11,18), null,
-                "http://www.mijardin.es/wp-content/uploads/2017/01/cultivar-la-planta-del-dinero.jpg"));
-
-        myplant_list.add(new Plant("Pepe el cactus", "Desconocido", "",
-                new Date(2018,11,18), 4,
-                new Date(2018,11,18), null,
-                "http://www.mijardin.es/wp-content/uploads/2017/01/cultivar-la-planta-del-dinero.jpg"));
-
-        myplant_list.add(new Plant("Pepe el cactus", "Desconocido", "",
-                new Date(2018,11,18), 4,
-                new Date(2018,11,18), null,
-                "http://www.mijardin.es/wp-content/uploads/2017/01/cultivar-la-planta-del-dinero.jpg"));
 
         searchadd_btn = findViewById(R.id.searchadd_btn);
         myplant_recycler = findViewById(R.id.myplant_recycler);

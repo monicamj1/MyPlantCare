@@ -28,6 +28,8 @@ public class MyPlantActivity extends AppCompatActivity {
     private TextView watering;
     private TextView waterDays;
 
+    public static final int EDIT_PLANT = 1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -83,7 +85,9 @@ public class MyPlantActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item){
         switch(item.getItemId()){
             case R.id.edit_plant:
-                //TODO: llamar a la actividad AddPlantActivity y pasarle la planta para rellenar los campos
+                Intent intent = new Intent(this, AddPlantActivity.class);
+                intent.putExtra("index", 3);
+                startActivityForResult(intent, EDIT_PLANT);
                 break;
             case R.id.delete_plant:
                 //TODO: borrar planta de la lista de plantas
@@ -92,7 +96,18 @@ public class MyPlantActivity extends AppCompatActivity {
         return true;
     }
 
+    protected void onActivityResult(int requestCode, int resultCode, Intent data){
+        switch(requestCode){
+            case EDIT_PLANT:
+                if(resultCode == RESULT_OK){
+                    String index = data.getStringExtra("index");
 
+
+
+                }
+
+        }
+    }
 
 
 }
