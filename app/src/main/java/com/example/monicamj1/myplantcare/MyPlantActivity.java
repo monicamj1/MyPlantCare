@@ -56,6 +56,11 @@ public class MyPlantActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
 
+        if(intent != null){
+            //TODO: recibir ID de la planta y recoger todos los campos necesarios
+            //namePlant = intent.getStringArrayExtra("index");
+        }
+
         namePlant = findViewById(R.id.name_view);
         specieName = findViewById(R.id.cientific_view);
         birthday = findViewById(R.id.birthday_view);
@@ -74,7 +79,6 @@ public class MyPlantActivity extends AppCompatActivity {
         namePlant.setText(myPlant.getName());
         specieName.setText(myPlant.getScientific_name());
         birthday.setText(String.format("%1$tm-%1$te-%1$tY", myPlant.getBirthday()));
-
         Date now = new Date();
         Date last = myPlant.getLast_watering_day();
         long diffTime = now.getTime() - last.getTime();
@@ -87,9 +91,7 @@ public class MyPlantActivity extends AppCompatActivity {
         waterDays.setText("Reminder: "+Integer.toString(myPlant.getReminder()));
 
 
-        if(intent != null){
-            //namePlant = intent.getStringArrayExtra("index");
-        }
+
 
     }
 
@@ -103,6 +105,7 @@ public class MyPlantActivity extends AppCompatActivity {
         switch(item.getItemId()){
             case R.id.edit_plant:
                 Intent intent = new Intent(this, AddPlantActivity.class);
+                //TODO: Enviar ID de la planta
                 intent.putExtra("index", 3);
                 startActivityForResult(intent, EDIT_PLANT);
                 break;
@@ -117,7 +120,7 @@ public class MyPlantActivity extends AppCompatActivity {
         switch(requestCode){
             case EDIT_PLANT:
                 if(resultCode == RESULT_OK){
-                    String index = data.getStringExtra("index");
+                   //TODO: Añadir planta a la base de datos
 
 
 

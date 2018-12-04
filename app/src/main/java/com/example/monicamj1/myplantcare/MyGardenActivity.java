@@ -122,7 +122,6 @@ public class MyGardenActivity extends AppCompatActivity {
         public void bind(Plant item) {
             name_view.setText(item.getName());
 
-           //TODO: Arreglar el problema del "this"
            Glide.with(MyGardenActivity.this)
                     .load(item.getProfile())
                     .apply(RequestOptions.circleCropTransform())
@@ -139,9 +138,7 @@ public class MyGardenActivity extends AppCompatActivity {
             if(days <= 0){
                 days = 0;
             }
-
             days_view.setText( days + " days");
-            //days_view.setText( item.getReminder() + " days");
             watered_btn.setText("Watered");
         }
     }
@@ -171,12 +168,7 @@ public class MyGardenActivity extends AppCompatActivity {
         switch(requestCode){
             case ADD_PLANT:
                 if(resultCode == RESULT_OK){
-                    String name = data.getStringExtra("name");
-                    String specie = data.getStringExtra("specie");
-                    String webURL = data.getStringExtra("webUrl");
-                    String birthday = data.getStringExtra("birthday");
-                    String reminder = data.getStringExtra("reminder");
-                    String lastday = data.getStringExtra("lastday");
+                    //TODO: si no se ha actualizado la lista, indicar que se actualice
 
 
                 }
