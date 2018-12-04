@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -93,6 +94,10 @@ public class MyPlantActivity extends AppCompatActivity {
 
 
 
+    }
+
+    public void updateWatering(View view){
+        //Actualizar recordatorio de riego
     }
 
     public boolean onCreateOptionsMenu(Menu menu){

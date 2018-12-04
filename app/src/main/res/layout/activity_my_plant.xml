@@ -224,11 +224,12 @@
 
   <Button
       android:id="@+id/watering_btn"
-      android:layout_width="50dp"
-      android:layout_height="50dp"
+      android:layout_width="60dp"
+      android:layout_height="60dp"
       android:layout_marginEnd="16dp"
       android:layout_marginRight="16dp"
       android:layout_marginTop="8dp"
+      android:onClick="updateWatering"
       android:text="Button"
       android:textColor="@color/Blanco"
       app:layout_constraintEnd_toEndOf="parent"

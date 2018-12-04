@@ -163,6 +163,10 @@ public class MyGardenActivity extends AppCompatActivity {
 
     }
 
+    public void updateWatering(View view){
+        //TODO: actualizar recordatorio de riego
+    }
+
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data){
         switch(requestCode){
