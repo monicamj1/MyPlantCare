@@ -1,16 +1,29 @@
 package com.example.monicamj1.myplantcare;
 
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.Ignore;
+import android.arch.persistence.room.PrimaryKey;
+
 import java.util.Date;
 
+@Entity(tableName = "MyPlants")
 public class Plant {
+    @PrimaryKey(autoGenerate = true)
+    public int myPlant_id;
+
     private String name;
     private String scientific_name;
     private String web_url;
     private Date birthday;
     private int reminder;
     private Date last_watering_day;
+
+    @Ignore
     private String images_url[];
+
     private String profile;
+
+    Plant() {}
 
     public Plant(String name, String scientific_name, String web_url, Date birthday, int reminder, Date last_watering_day, String[] images_url, String profile) {
         this.name = name;
