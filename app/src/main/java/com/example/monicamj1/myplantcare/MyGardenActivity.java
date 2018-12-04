@@ -25,6 +25,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 public class MyGardenActivity extends AppCompatActivity {
@@ -40,6 +41,14 @@ public class MyGardenActivity extends AppCompatActivity {
     public static final int ADD_PLANT = 1;
     public static final int MY_PLANT = 2;
 
+    static Calendar cal = new GregorianCalendar();
+
+    static Date dia(int dia, int mes, int anyo) {
+        cal.set(Calendar.YEAR, anyo);
+        cal.set(Calendar.MONTH, mes-1);
+        cal.set(Calendar.DAY_OF_MONTH, dia);
+        return cal.getTime();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,29 +57,9 @@ public class MyGardenActivity extends AppCompatActivity {
 
         myplant_list = new ArrayList<>();
 
-        myplant_list.add(new Plant("Lola la flora", "Desconocido", "",
-                new Date(2018,11,18), 5,
-                new Date(2018,11,18), null,
-                "http://www.mijardin.es/wp-content/uploads/2017/01/cultivar-la-planta-del-dinero.jpg"));
-
-        myplant_list.add(new Plant("Pepe el cactus", "Desconocido", "",
-                new Date(2018,11,18), 4,
-                new Date(2018,11,18), null,
-                "http://www.mijardin.es/wp-content/uploads/2017/01/cultivar-la-planta-del-dinero.jpg"));
-
-        myplant_list.add(new Plant("Paco el cocotero", "Desconocido", "",
-                new Date(2018,11,18), 4,
-                new Date(2018,11,18), null,
-                "http://www.mijardin.es/wp-content/uploads/2017/01/cultivar-la-planta-del-dinero.jpg"));
-
-        myplant_list.add(new Plant("Pepe el cactus", "Desconocido", "",
-                new Date(2018,11,18), 4,
-                new Date(2018,11,18), null,
-                "http://www.mijardin.es/wp-content/uploads/2017/01/cultivar-la-planta-del-dinero.jpg"));
-
-        myplant_list.add(new Plant("Pepe el cactus", "Desconocido", "",
-                new Date(2018,11,18), 4,
-                new Date(2018,11,18), null,
+        myplant_list.add (new Plant("Lola la flora", "Desconocido", "",
+                dia(18,11,2018), 5,
+                dia(2,12,2018), null,
                 "http://www.mijardin.es/wp-content/uploads/2017/01/cultivar-la-planta-del-dinero.jpg"));
 
 
@@ -87,22 +76,22 @@ public class MyGardenActivity extends AppCompatActivity {
         myplant_recycler.setAdapter(new Adapter());
 
 
-        /*
+
         searchadd_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               Intent intent = new Intent(this, AddPlantActivity.class);
+               Intent intent = new Intent(MyGardenActivity.this, AddPlantActivity.class);
                 startActivityForResult(intent, ADD_PLANT);
             }
         });
-        */
+
 
 
     }
 
     private void onPlantClick(int pos) {
         Intent intent = new Intent(this, MyPlantActivity.class);
-        intent.putExtra("index", 3);
+       // intent.putExtra("index", 3);
         startActivityForResult(intent, MY_PLANT);
     }
 
@@ -132,29 +121,25 @@ public class MyGardenActivity extends AppCompatActivity {
 
         public void bind(Plant item) {
             name_view.setText(item.getName());
-          /*
+
            //TODO: Arreglar el problema del "this"
-           Glide.with(this)
+           Glide.with(MyGardenActivity.this)
                     .load(item.getProfile())
                     .apply(RequestOptions.circleCropTransform())
-                    .into(plantimage_view);*/
+                    .into(plantimage_view);
 
             name_view.setText(item.getName());
             reminder_view.setText("Watering in:");
 
-            //TODO: Calcular bien los días que quedan para regar
-
-            DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
-            Date date = new Date();
-            System.out.println(dateFormat.format(date));
-
-            long diffTime = date.getTime() - item.getLast_watering_day().getTime();
+            Date now = new Date();
+            Date last = item.getLast_watering_day();
+            long diffTime = now.getTime() - last.getTime();
             long diffDays = diffTime / (1000 * 60 * 60 * 24);
             int days = item.getReminder() - (int)diffDays;
             if(days <= 0){
                 days = 0;
             }
-            ////////////////////////////////////////////////////
+
             days_view.setText( days + " days");
             //days_view.setText( item.getReminder() + " days");
             watered_btn.setText("Watered");

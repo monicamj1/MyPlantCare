@@ -13,7 +13,11 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.GlideBuilder;
 import com.bumptech.glide.request.RequestOptions;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 public class MyPlantActivity extends AppCompatActivity {
 
@@ -30,6 +34,14 @@ public class MyPlantActivity extends AppCompatActivity {
 
     public static final int EDIT_PLANT = 1;
 
+    static Date dia(int dia, int mes, int anyo) {
+        Calendar cal = new GregorianCalendar();
+        cal.set(Calendar.YEAR, anyo);
+        cal.set(Calendar.MONTH, mes-1);
+        cal.set(Calendar.DAY_OF_MONTH, dia);
+        return cal.getTime();
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,8 +49,8 @@ public class MyPlantActivity extends AppCompatActivity {
 
 
         myPlant = new Plant("Lola la flora", "Desconocido", "",
-                new Date(2018,11,18), 5,
-                new Date(2018,11,18), null,
+                dia(18,11,2018), 5,
+                dia(18,11,2018), null,
                 "http://www.mijardin.es/wp-content/uploads/2017/01/cultivar-la-planta-del-dinero.jpg");
 
 
@@ -54,25 +66,30 @@ public class MyPlantActivity extends AppCompatActivity {
        profileImage = findViewById(R.id.profileImage_view);
 
         Glide.with(this)
-                .load(myPlant.getProfile()) //problemas con el get de la imagen
+                .load(myPlant.getProfile())
                 .apply(RequestOptions.circleCropTransform())
                 .into(profileImage);
 
-        //TODO:calcular dias que faltan para regar
-        //TODO: fechas bien!!
 
         namePlant.setText(myPlant.getName());
         specieName.setText(myPlant.getScientific_name());
-       // birthday.setText(myPlant.getBirthday().toString());
-        //watering.setText(myPlant.getReminder());
-       // waterDays.setText(myPlant.getLast_watering_day().toString());
+        birthday.setText(String.format("%1$tm-%1$te-%1$tY", myPlant.getBirthday()));
 
+        Date now = new Date();
+        Date last = myPlant.getLast_watering_day();
+        long diffTime = now.getTime() - last.getTime();
+        long diffDays = diffTime / (1000 * 60 * 60 * 24);
+        int days = myPlant.getReminder() - (int)diffDays;
+        if(days <= 0){
+            days = 0;
+        }
+        watering.setText("Watering in "+days+" days");
+        waterDays.setText("Reminder: "+Integer.toString(myPlant.getReminder()));
 
 
         if(intent != null){
             //namePlant = intent.getStringArrayExtra("index");
         }
-
 
     }
 

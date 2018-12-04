@@ -60,22 +60,23 @@
         app:layout_constraintTop_toBottomOf="@+id/name_view"
         tools:text="Saintpaulia ionantha" />
 
-    <TextView
-        android:id="@+id/birthdayTitle"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginLeft="48dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginStart="48dp"
-        android:layout_marginTop="16dp"
-        android:textColor="@color/Verde_Claro"
-        android:textSize="12sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.335"
-        app:layout_constraintStart_toStartOf="@+id/limit_1"
-        app:layout_constraintTop_toBottomOf="@+id/cientific_view"
-        tools:text="Birthday" />
+  <TextView
+      android:id="@+id/birthdayTitle"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_marginEnd="8dp"
+      android:layout_marginLeft="48dp"
+      android:layout_marginRight="8dp"
+      android:layout_marginStart="48dp"
+      android:layout_marginTop="16dp"
+      android:text="@string/Birthday"
+      android:textColor="@color/Verde_Claro"
+      android:textSize="12sp"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintHorizontal_bias="0.335"
+      app:layout_constraintStart_toStartOf="@+id/limit_1"
+      app:layout_constraintTop_toBottomOf="@+id/cientific_view"
+      tools:text="Birthday" />
 
     <TextView
         android:id="@+id/birthday_view"
@@ -109,21 +110,21 @@
       app:layout_constraintStart_toStartOf="@+id/limit_1"
       app:layout_constraintTop_toBottomOf="@+id/birthday_view" />
 
-    <TextView
-        android:id="@+id/reminderTitle"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:text="@string/WateringReminder"
-        android:textColor="@color/Verde_Claro"
-        android:textSize="12sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/about_button" />
+  <TextView
+      android:id="@+id/reminderTitle"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_marginEnd="8dp"
+      android:layout_marginLeft="16dp"
+      android:layout_marginRight="8dp"
+      android:layout_marginStart="16dp"
+      android:layout_marginTop="24dp"
+      android:text="@string/WateringReminder"
+      android:textColor="@color/Verde_Claro"
+      android:textSize="12sp"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/about_button" />
 
     <View
         android:id="@+id/rule1"
@@ -179,19 +180,19 @@
       app:layout_constraintStart_toEndOf="@+id/wateringTitle"
       tools:text="3 days" />
 
-    <TextView
-        android:id="@+id/waterEveryTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:text="@string/WaterEveryXDay1"
-        android:textColor="@color/Verde_Medio"
-        android:textSize="12sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/wateringTitle"
-        tools:text="Water every " />
+  <TextView
+      android:id="@+id/waterEveryTitle"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginLeft="24dp"
+      android:layout_marginStart="24dp"
+      android:layout_marginTop="8dp"
+      android:text="@string/WaterEveryXDay1"
+      android:textColor="@color/Verde_Medio"
+      android:textSize="12sp"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/wateringTitle"
+      tools:text="Water every " />
 
   <TextView
       android:id="@+id/waterDays_view"
@@ -223,8 +224,8 @@
 
   <Button
       android:id="@+id/watering_btn"
-      android:layout_width="71dp"
-      android:layout_height="71dp"
+      android:layout_width="50dp"
+      android:layout_height="50dp"
       android:layout_marginEnd="16dp"
       android:layout_marginRight="16dp"
       android:layout_marginTop="8dp"
@@ -241,7 +242,7 @@
       android:layout_marginLeft="16dp"
       android:layout_marginRight="16dp"
       android:layout_marginStart="16dp"
-      android:layout_marginTop="8dp"
+      android:layout_marginTop="24dp"
 
       android:text="@string/Gallery"
       android:textColor="@color/Verde_Claro"
