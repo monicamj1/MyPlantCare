@@ -1,5 +1,6 @@
 package com.example.monicamj1.myplantcare;
 
+import android.arch.persistence.room.Room;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -28,6 +29,8 @@ public class MyPlantActivity extends AppCompatActivity {
     private TextView watering;
     private TextView waterDays;
 
+    AppDatabase db;
+
     public static final int EDIT_PLANT = 1;
 
     @Override
@@ -35,12 +38,18 @@ public class MyPlantActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_plant);
 
+        db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "AppDatabase").build();
+
+
 
         myPlant = new Plant("Lola la flora", "Desconocido", "",
                 new Date(2018,11,18), 5,
                 new Date(2018,11,18), null,
                 "http://www.mijardin.es/wp-content/uploads/2017/01/cultivar-la-planta-del-dinero.jpg");
 
+        db.plantDao().insertPnat(myPlant);
+
+        db.plantDao().loadPlantById(1);
 
         Intent intent = getIntent();
 
