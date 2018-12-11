@@ -2,6 +2,7 @@ package com.example.monicamj1.myplantcare;
 
 import android.arch.persistence.room.Room;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -30,6 +31,7 @@ public class MyPlantActivity extends AppCompatActivity {
     private TextView waterDays;
 
     AppDatabase db;
+    DAO_myPlant plantDao;
 
     public static final int EDIT_PLANT = 1;
 
@@ -40,16 +42,9 @@ public class MyPlantActivity extends AppCompatActivity {
 
         db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "AppDatabase").build();
 
+        plantDao = db.plantDao();
 
-
-        myPlant = new Plant("Lola la flora", "Desconocido", "",
-                new Date(2018,11,18), 5,
-                new Date(2018,11,18), null,
-                "http://www.mijardin.es/wp-content/uploads/2017/01/cultivar-la-planta-del-dinero.jpg");
-
-        db.plantDao().insertPnat(myPlant);
-
-        db.plantDao().loadPlantById(1);
+        // db.plantDao().loadPlantById(1);
 
         Intent intent = getIntent();
 
@@ -60,7 +55,12 @@ public class MyPlantActivity extends AppCompatActivity {
         waterDays = findViewById(R.id.waterDays_view);
 
 
-       profileImage = findViewById(R.id.profileImage_view);
+        profileImage = findViewById(R.id.profileImage_view);
+
+        myPlant = new Plant("Lola la flora", "Desconocido", "",
+                new Date(2018,11,18), 5,
+                new Date(2018,11,18), null,
+                "http://www.mijardin.es/wp-content/uploads/2017/01/cultivar-la-planta-del-dinero.jpg");
 
         Glide.with(this)
                 .load(myPlant.getProfile()) //problemas con el get de la imagen
@@ -84,6 +84,8 @@ public class MyPlantActivity extends AppCompatActivity {
 
 
     }
+
+
 
     public boolean onCreateOptionsMenu(Menu menu){
         MenuInflater inflater = getMenuInflater();
