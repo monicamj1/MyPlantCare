@@ -57,7 +57,7 @@ public class MyPlantActivity extends AppCompatActivity {
     AppDatabase db;
     DAO_myPlant plantDao;
 
-    int id;
+    String id;
 
     public static final int EDIT_PLANT = 1;
 
@@ -82,21 +82,21 @@ public class MyPlantActivity extends AppCompatActivity {
         plantDao = db.plantDao();
 
 
-       /* myPlant = new Plant("Lola la flora", "Desconocido", "",
-                dia(18,11,2018), 5,
-                dia(18,11,2018), null,
-                "http://www.mijardin.es/wp-content/uploads/2017/01/cultivar-la-planta-del-dinero.jpg");*/
-
         Intent intent = getIntent();
 
         if(intent != null){
-            id = intent.getIntExtra("index", -1);
-            if (id == -1) {
+           int id_plant = intent.getIntExtra("index", -1);
+           id = Integer.toString(id_plant);
+            /*if (id == -1) {
                 // ERROR: Ese id no existe.
-            } else {
+                myPlant = new Plant("Lola la flora", "Desconocido", "",
+                        dia(18,11,2018), 5,
+                        dia(18,11,2018), null,
+                        "http://www.mijardin.es/wp-content/uploads/2017/01/cultivar-la-planta-del-dinero.jpg");
+            } else {*/
                 Log.i("MyPlantCare", "Id Planta: " + id);
-                new MyPlantActivity.GetPlant(this, plantDao, id).execute();
-            }
+                new MyPlantActivity.GetPlant(this, plantDao).execute(id);
+            //}
         }
 
         namePlant = findViewById(R.id.name_view);
@@ -109,7 +109,7 @@ public class MyPlantActivity extends AppCompatActivity {
 
        profileImage = findViewById(R.id.profileImage_view);
 
-        Glide.with(this)
+       Glide.with(this)
                 .load(myPlant.getProfile())
                 .apply(RequestOptions.circleCropTransform())
                 .into(profileImage);
@@ -133,26 +133,28 @@ public class MyPlantActivity extends AppCompatActivity {
     }
 
     //GET PLANT FROM DB
-    public static class GetPlant extends AsyncTask<Void, Void, Plant> {
+    public static class GetPlant extends AsyncTask<String, Void, Plant> {
         private MyPlantActivity activity;
         private DAO_myPlant plantDao;
-        int id_plant;
 
-        GetPlant(MyPlantActivity activity, DAO_myPlant dao, int id) {
+
+        GetPlant(MyPlantActivity activity, DAO_myPlant dao) {
             this.plantDao = dao;
             this.activity = activity;
-            id_plant = id;
+
         }
 
         @Override
-        protected Plant doInBackground(Void... voids) {
-            return plantDao.loadPlantById(id_plant);
+        protected Plant doInBackground(String... strings) {
+            int id = Integer.parseInt(strings[0]);
+            return plantDao.loadPlantById(id);
         }
 
         @Override
         protected void onPostExecute(Plant plant) {
             super.onPostExecute(plant);
             activity.setMyPlant(plant);
+            Log.i("MyPlantCare", "Planta rescatada");
         }
     }
 
@@ -167,7 +169,7 @@ public class MyPlantActivity extends AppCompatActivity {
     }
 
     //CAMARA
-    public void openCamera(View view) {
+   /* public void openCamera(View view) {
         if(checkCameraHardware(this)==true){
             //getCameraInstance();
             dispatchTakePictureIntent();
@@ -190,7 +192,7 @@ public class MyPlantActivity extends AppCompatActivity {
             startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
         }
 
-    }
+    }*/
 
     /*
     //RECYCLERVIEW TIPO GRID
