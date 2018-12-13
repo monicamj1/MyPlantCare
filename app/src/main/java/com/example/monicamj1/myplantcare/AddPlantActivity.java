@@ -108,7 +108,7 @@ public class AddPlantActivity extends AppCompatActivity {
         }, birthdate_year, birthdate_month, birthdate_dayOfMonth).show();
     }
 
-    //formato wattering day
+    //formato watteringDay
     public void clickWater(View view) {
         new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
             @Override
@@ -122,7 +122,7 @@ public class AddPlantActivity extends AppCompatActivity {
     }
 
     public void addPlant(View view){
-        Toast.makeText(this, "Botón añadido", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Added plant", Toast.LENGTH_SHORT).show();
 
         String name = plantName_edit.getText().toString();
         String specie= specieName_view.getText().toString();

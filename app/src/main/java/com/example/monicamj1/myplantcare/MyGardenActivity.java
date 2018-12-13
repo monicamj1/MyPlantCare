@@ -1,7 +1,9 @@
 package com.example.monicamj1.myplantcare;
 
+import android.arch.persistence.room.Room;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.os.AsyncTask;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -43,6 +45,9 @@ public class MyGardenActivity extends AppCompatActivity {
     public static final int ADD_PLANT = 1;
     public static final int MY_PLANT = 2;
 
+    //db
+    AppDatabase db;
+    DAO_myPlant plantDao;
 
 
     @Override
@@ -52,10 +57,10 @@ public class MyGardenActivity extends AppCompatActivity {
 
         myplant_list = new ArrayList<>();
 
-        myplant_list.add (new Plant("Lola la flora", "Desconocido", "",
+       /* myplant_list.add (new Plant("Lola la flora", "Desconocido", "",
                 dia(18,11,2018), 5,
                 dia(2,12,2018), null,
-                "http://www.mijardin.es/wp-content/uploads/2017/01/cultivar-la-planta-del-dinero.jpg"));
+                "http://www.mijardin.es/wp-content/uploads/2017/01/cultivar-la-planta-del-dinero.jpg"));*/
 
 
         searchadd_btn = findViewById(R.id.searchadd_btn);
@@ -81,8 +86,44 @@ public class MyGardenActivity extends AppCompatActivity {
         });
 
 
+        db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "AppDatabase").build();
+        plantDao = db.plantDao();
+
+        new MyGardenActivity.GetAllPlants(this, plantDao).execute();
+
 
     }
+
+
+
+
+    //Get Plant Lis from DB
+    public static class GetAllPlants extends AsyncTask<Void, Void, List<Plant>> {
+        private MyGardenActivity activity;
+        private DAO_myPlant plantDao;
+
+        GetAllPlants(MyGardenActivity activity, DAO_myPlant dao) {
+            this.plantDao = dao;
+            this.activity = activity;
+        }
+
+        @Override
+        protected List<Plant> doInBackground(Void... voids) {
+            return plantDao.loadAllMyPlants();
+        }
+
+        @Override
+        protected void onPostExecute(List<Plant> plants) {
+            super.onPostExecute(plants);
+            activity.setPlantList(plants);
+        }
+    }
+
+    private void setPlantList(List<Plant> plants) {
+        myplant_list = plants;
+        garden_adapter.notifyDataSetChanged();
+    }
+
 
     private void onPlantClick(int pos) {
         Intent intent = new Intent(this, MyPlantActivity.class);
