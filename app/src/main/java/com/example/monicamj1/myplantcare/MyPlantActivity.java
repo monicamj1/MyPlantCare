@@ -1,5 +1,6 @@
 package com.example.monicamj1.myplantcare;
 
+import android.arch.persistence.room.Room;
 import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
@@ -155,7 +156,7 @@ public class MyPlantActivity extends AppCompatActivity {
             startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
         }
 
-
+    }
 
     /*
     //RECYCLERVIEW TIPO GRID
@@ -238,8 +239,8 @@ public class MyPlantActivity extends AppCompatActivity {
                 if(resultCode == RESULT_OK){
                     //TODO: recoger imagen
                     Bitmap image = (Bitmap) data.getExtras().get("data");
-                    ImageView imageview = findViewById(R.id.image1_view);
-                    imageview.setImageBitmap(image);
+                    // ImageView imageview = findViewById(R.id.image1_view);
+                    // imageview.setImageBitmap(image);
                 }
                 break;
 
