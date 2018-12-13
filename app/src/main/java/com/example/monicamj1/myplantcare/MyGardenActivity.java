@@ -122,7 +122,7 @@ public class MyGardenActivity extends AppCompatActivity {
 
     private void onPlantClick(int pos) {
         Intent intent = new Intent(this, MyPlantActivity.class);
-        long index = garden_adapter.getItemId(pos);
+        int index = myplant_list.get(pos).myPlant_id;
         intent.putExtra("index", index);
         startActivityForResult(intent, MY_PLANT);
     }

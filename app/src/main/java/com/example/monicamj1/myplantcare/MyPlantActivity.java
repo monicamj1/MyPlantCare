@@ -15,6 +15,7 @@ import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -89,9 +90,15 @@ public class MyPlantActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
 
+        int id;
         if(intent != null){
             //TODO: recibir ID de la planta y recoger todos los campos necesarios
-            //namePlant = intent.getStringArrayExtra("index");
+            id = intent.getIntExtra("index", -1);
+            if (id == -1) {
+                // ERROR: Ese id no existe.
+            } else {
+                Log.i("MyPlantCare", "Id Planta: " + id);
+            }
         }
 
         namePlant = findViewById(R.id.name_view);
