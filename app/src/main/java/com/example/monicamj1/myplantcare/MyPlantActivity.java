@@ -1,6 +1,7 @@
 package com.example.monicamj1.myplantcare;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -9,12 +10,15 @@ import android.graphics.Camera;
 import android.os.Build;
 import android.provider.MediaStore;
 import android.support.annotation.RequiresApi;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -34,6 +38,7 @@ public class MyPlantActivity extends AppCompatActivity {
 
     //Modelo
     Plant myPlant;
+    String[] gallery_images;
 
     //referencias
     private ImageView profileImage;
@@ -52,10 +57,11 @@ public class MyPlantActivity extends AppCompatActivity {
     static final int REQUEST_IMAGE_CAPTURE = 10;
 
 
+
     static Date dia(int dia, int mes, int anyo) {
         Calendar cal = new GregorianCalendar();
         cal.set(Calendar.YEAR, anyo);
-        cal.set(Calendar.MONTH, mes - 1);
+        cal.set(Calendar.MONTH, mes-1);
         cal.set(Calendar.DAY_OF_MONTH, dia);
         return cal.getTime();
     }
@@ -71,19 +77,18 @@ public class MyPlantActivity extends AppCompatActivity {
         //db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "AppDatabase").build();
 
 
-        //db.plantDao().loadPlantById(1);
         myPlant = new Plant("Lola la flora", "Desconocido", "",
-                dia(18, 11, 2018), 5,
-                dia(18, 11, 2018), null,
+                dia(18,11,2018), 5,
+                dia(18,11,2018), null,
                 "http://www.mijardin.es/wp-content/uploads/2017/01/cultivar-la-planta-del-dinero.jpg");
 
-        // db.plantDao().insertPnat(myPlant);
+       // db.plantDao().insertPnat(myPlant);
 
-        // db.plantDao().loadPlantById(1);
+       // db.plantDao().loadPlantById(1);
 
         Intent intent = getIntent();
 
-        if (intent != null) {
+        if(intent != null){
             //TODO: recibir ID de la planta y recoger todos los campos necesarios
             //namePlant = intent.getStringArrayExtra("index");
         }
@@ -96,7 +101,7 @@ public class MyPlantActivity extends AppCompatActivity {
         addImage_btn = findViewById(R.id.addImage_btn);
 
 
-        profileImage = findViewById(R.id.profileImage_view);
+       profileImage = findViewById(R.id.profileImage_view);
 
         Glide.with(this)
                 .load(myPlant.getProfile())
@@ -111,28 +116,29 @@ public class MyPlantActivity extends AppCompatActivity {
         Date last = myPlant.getLast_watering_day();
         long diffTime = now.getTime() - last.getTime();
         long diffDays = diffTime / (1000 * 60 * 60 * 24);
-        int days = myPlant.getReminder() - (int) diffDays;
-        if (days <= 0) {
+        int days = myPlant.getReminder() - (int)diffDays;
+        if(days <= 0){
             days = 0;
         }
-        watering.setText("Watering in " + days + " days");
+        watering.setText("Watering in "+days+" days");
         waterDays.setText(Integer.toString(myPlant.getReminder()));
 
-        if (intent != null) {
-            //namePlant = intent.getStringArrayExtra("index");
-        }
+
     }
 
-    public void updateWatering(View view) {
+    //ACTUALIZAR RIEGO
+    public void updateWatering(View view){
         //Actualizar recordatorio de riego
     }
 
-
-}
+    //CAMARA
     public void openCamera(View view) {
         if(checkCameraHardware(this)==true){
             //getCameraInstance();
             dispatchTakePictureIntent();
+        }
+    }
+
     private boolean checkCameraHardware(Context context) {
         if (context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA)){
             // this device has a camera
@@ -142,6 +148,7 @@ public class MyPlantActivity extends AppCompatActivity {
             return false;
         }
     }
+
     private void dispatchTakePictureIntent() {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
@@ -150,7 +157,54 @@ public class MyPlantActivity extends AppCompatActivity {
 
 
 
+    /*
+    //RECYCLERVIEW TIPO GRID
+    class ViewHolder extends RecyclerView.ViewHolder{
+        ImageView imageItem_view;
 
+        public ViewHolder(View itemView) {
+            super(itemView);
+            this.imageItem_view = itemView.findViewById(R.id.imageItem_view);
+
+
+            plant_layout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onPlantClick(getAdapterPosition());
+                }
+            });
+        }
+
+        public void bind(Plant item) {
+            Glide.with(MyPlantActivity.this)
+                    .load(item.getProfile())
+                    .apply(RequestOptions.circleCropTransform())
+                    .into(imageItem_view);
+
+        }
+    }
+
+    class Adapter extends RecyclerView.Adapter<MyPlantActivity.ViewHolder>{
+
+        @Override
+        public MyPlantActivity.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            View itemView = getLayoutInflater().inflate(R.layout.myplant_item, parent, false);
+            return new ViewHolder(itemView);
+        }
+
+        @Override
+        public void onBindViewHolder(MyPlantActivity.ViewHolder holder, int position) {
+            holder.bind(gallery_images.get(position));
+        }
+
+        @Override
+        public int getItemCount() {
+            return gallery_images.size();
+        }
+
+    }*/
+
+    // CREAR MENÚ
     public boolean onCreateOptionsMenu(Menu menu){
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.myplant_menu, menu);
@@ -172,6 +226,7 @@ public class MyPlantActivity extends AppCompatActivity {
         return true;
     }
 
+    //RESULTADO DE ACTIVIDADES
     protected void onActivityResult(int requestCode, int resultCode, Intent data){
         switch(requestCode){
             case EDIT_PLANT:
