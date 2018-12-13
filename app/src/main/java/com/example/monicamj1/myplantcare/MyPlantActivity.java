@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Camera;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.provider.MediaStore;
 import android.support.annotation.RequiresApi;
@@ -35,12 +36,14 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.List;
 
 public class MyPlantActivity extends AppCompatActivity {
 
     //Modelo
     Plant myPlant;
     String[] gallery_images;
+
 
     //referencias
     private ImageView profileImage;
@@ -54,10 +57,11 @@ public class MyPlantActivity extends AppCompatActivity {
     AppDatabase db;
     DAO_myPlant plantDao;
 
+    int id;
+
     public static final int EDIT_PLANT = 1;
 
     static final int REQUEST_IMAGE_CAPTURE = 10;
-
 
 
     static Date dia(int dia, int mes, int anyo) {
@@ -76,28 +80,22 @@ public class MyPlantActivity extends AppCompatActivity {
         db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "AppDatabase").build();
 
         plantDao = db.plantDao();
-        //db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "AppDatabase").build();
 
 
-        myPlant = new Plant("Lola la flora", "Desconocido", "",
+       /* myPlant = new Plant("Lola la flora", "Desconocido", "",
                 dia(18,11,2018), 5,
                 dia(18,11,2018), null,
-                "http://www.mijardin.es/wp-content/uploads/2017/01/cultivar-la-planta-del-dinero.jpg");
-
-       // db.plantDao().insertPnat(myPlant);
-
-       // db.plantDao().loadPlantById(1);
+                "http://www.mijardin.es/wp-content/uploads/2017/01/cultivar-la-planta-del-dinero.jpg");*/
 
         Intent intent = getIntent();
 
-        int id;
         if(intent != null){
-            //TODO: recibir ID de la planta y recoger todos los campos necesarios
             id = intent.getIntExtra("index", -1);
             if (id == -1) {
                 // ERROR: Ese id no existe.
             } else {
                 Log.i("MyPlantCare", "Id Planta: " + id);
+                new MyPlantActivity.GetPlant(this, plantDao, id).execute();
             }
         }
 
@@ -133,6 +131,35 @@ public class MyPlantActivity extends AppCompatActivity {
 
 
     }
+
+    //GET PLANT FROM DB
+    public static class GetPlant extends AsyncTask<Void, Void, Plant> {
+        private MyPlantActivity activity;
+        private DAO_myPlant plantDao;
+        int id_plant;
+
+        GetPlant(MyPlantActivity activity, DAO_myPlant dao, int id) {
+            this.plantDao = dao;
+            this.activity = activity;
+            id_plant = id;
+        }
+
+        @Override
+        protected Plant doInBackground(Void... voids) {
+            return plantDao.loadPlantById(id_plant);
+        }
+
+        @Override
+        protected void onPostExecute(Plant plant) {
+            super.onPostExecute(plant);
+            activity.setMyPlant(plant);
+        }
+    }
+
+    private void setMyPlant(Plant plant) {
+        myPlant = plant;
+    }
+
 
     //ACTUALIZAR RIEGO
     public void updateWatering(View view){
