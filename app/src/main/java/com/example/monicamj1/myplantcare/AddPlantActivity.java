@@ -21,6 +21,7 @@ public class AddPlantActivity extends AppCompatActivity {
 
     // model
     private int birthdate_year, birthdate_month, birthdate_dayOfMonth;
+    private int waterdate_year, waterdate_month, waterdate_dayOfMonth;
 
     //Referencias
     Button addToGarden_btn;
@@ -48,6 +49,10 @@ public class AddPlantActivity extends AppCompatActivity {
         birthdate_year = cal.get(Calendar.YEAR);
         birthdate_month = cal.get(Calendar.MONTH);
         birthdate_dayOfMonth = cal.get(Calendar.DAY_OF_MONTH);
+
+        waterdate_dayOfMonth = cal.get(Calendar.DAY_OF_MONTH);
+        waterdate_month = birthdate_month = cal.get(Calendar.MONTH);
+        waterdate_year =cal.get(Calendar.YEAR);
     }
 
     @Override
@@ -90,6 +95,7 @@ public class AddPlantActivity extends AppCompatActivity {
         }
     }
 
+    //formato Birthday
     public void clickDate(View view) {
         new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
             @Override
@@ -102,26 +108,36 @@ public class AddPlantActivity extends AppCompatActivity {
         }, birthdate_year, birthdate_month, birthdate_dayOfMonth).show();
     }
 
-   /* public void addPlant(View view){
-        Toast.makeText(this, "Botón añadido", Toast.LENGTH_SHORT).show();
+    //formato wattering day
+    public void clickWater(View view) {
+        new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                waterdate_year = year;
+                waterdate_month = month;
+                waterdate_dayOfMonth = dayOfMonth;
+                lastWateringDate_edit.setText(String.format("%02d/%02d/%04d", dayOfMonth, month+1, year));
+            }
+        }, waterdate_year, waterdate_month, waterdate_dayOfMonth).show();
+    }
 
+    public void addPlant(View view){
+        Toast.makeText(this, "Botón añadido", Toast.LENGTH_SHORT).show();
 
         String name = plantName_edit.getText().toString();
         String specie= specieName_view.getText().toString();
         Date birthday = dia(birthdate_dayOfMonth,birthdate_month,birthdate_year);
-        Date lasttWatering = null;
+        Date lastWatering = dia(waterdate_dayOfMonth, waterdate_month, waterdate_year);
         int reminder = Integer.parseInt(wateringNumber_edit.getText().toString());
-
-
         Plant plant = new Plant(name, specie, "",
-                dia(15, 12, 2018), reminder,
-                dia(4,11,2018), null,
+                birthday, reminder,
+                lastWatering, null,
                 "http://www.mijardin.es/wp-content/uploads/2017/01/cultivar-la-planta-del-dinero.jpg");
 
         new AddPlantActivity.InsertTask(plantDao).execute(plant);
         finish();
 
-    }*/
+    }
 
 
 

@@ -28,6 +28,8 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 
+import static com.example.monicamj1.myplantcare.AddPlantActivity.dia;
+
 public class MyGardenActivity extends AppCompatActivity {
 
     //Modelo
@@ -41,14 +43,7 @@ public class MyGardenActivity extends AppCompatActivity {
     public static final int ADD_PLANT = 1;
     public static final int MY_PLANT = 2;
 
-    static Calendar cal = new GregorianCalendar();
 
-    static Date dia(int dia, int mes, int anyo) {
-        cal.set(Calendar.YEAR, anyo);
-        cal.set(Calendar.MONTH, mes-1);
-        cal.set(Calendar.DAY_OF_MONTH, dia);
-        return cal.getTime();
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
