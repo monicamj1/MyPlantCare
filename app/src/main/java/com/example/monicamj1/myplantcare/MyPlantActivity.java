@@ -44,7 +44,7 @@ public class MyPlantActivity extends AppCompatActivity {
 
         plantDao = db.plantDao();
 
-        // db.plantDao().loadPlantById(1);
+        //db.plantDao().loadPlantById(1);
 
         Intent intent = getIntent();
 
@@ -79,7 +79,7 @@ public class MyPlantActivity extends AppCompatActivity {
 
 
         if(intent != null){
-            //namePlant = intent.getStringArrayExtra("index");
+           // namePlant = intent.getStringArrayExtra("index");
         }
 
 

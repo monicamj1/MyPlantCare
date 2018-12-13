@@ -57,12 +57,6 @@ public class MyGardenActivity extends AppCompatActivity {
 
         myplant_list = new ArrayList<>();
 
-       /* myplant_list.add (new Plant("Lola la flora", "Desconocido", "",
-                dia(18,11,2018), 5,
-                dia(2,12,2018), null,
-                "http://www.mijardin.es/wp-content/uploads/2017/01/cultivar-la-planta-del-dinero.jpg"));*/
-
-
         searchadd_btn = findViewById(R.id.searchadd_btn);
         myplant_recycler = findViewById(R.id.myplant_recycler);
 
@@ -74,7 +68,6 @@ public class MyGardenActivity extends AppCompatActivity {
                 new DividerItemDecoration(this, DividerItemDecoration.VERTICAL)
         );
         myplant_recycler.setAdapter(new Adapter());
-
 
 
         searchadd_btn.setOnClickListener(new View.OnClickListener() {
@@ -127,7 +120,8 @@ public class MyGardenActivity extends AppCompatActivity {
 
     private void onPlantClick(int pos) {
         Intent intent = new Intent(this, MyPlantActivity.class);
-       // intent.putExtra("index", 3);
+        long index = garden_adapter.getItemId(pos);
+        intent.putExtra("index", index);
         startActivityForResult(intent, MY_PLANT);
     }
 
