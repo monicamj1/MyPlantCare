@@ -127,6 +127,10 @@ public class MyGardenActivity extends AppCompatActivity {
         startActivityForResult(intent, MY_PLANT);
     }
 
+    public void updateWatering(int pos){
+        //TODO: actualizar recordatorio de riego
+    }
+
     class ViewHolder extends RecyclerView.ViewHolder{
         ImageView plantimage_view;
         ConstraintLayout plant_layout;
@@ -143,6 +147,13 @@ public class MyGardenActivity extends AppCompatActivity {
             this.days_view = itemView.findViewById(R.id.days_view);
             this.plant_layout = itemView.findViewById(R.id.plant_layout);
             this.watered_btn = itemView.findViewById(R.id.watered_btn);
+            watered_btn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    updateWatering(getAdapterPosition());
+                }
+            });
+
             plant_layout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -195,9 +206,7 @@ public class MyGardenActivity extends AppCompatActivity {
 
     }
 
-    public void updateWatering(View view){
-        //TODO: actualizar recordatorio de riego
-    }
+
 
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data){
@@ -205,7 +214,7 @@ public class MyGardenActivity extends AppCompatActivity {
             case ADD_PLANT:
                 if(resultCode == RESULT_OK){
                     //TODO: si no se ha actualizado la lista, indicar que se actualice
-
+                    garden_adapter.notifyDataSetChanged();
 
                 }
 
