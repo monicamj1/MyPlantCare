@@ -65,11 +65,10 @@ public class MyGardenActivity extends AppCompatActivity {
         garden_adapter = new Adapter();
 
         myplant_recycler.setLayoutManager(new LinearLayoutManager(this));
-       // myplant_recycler.setLayoutManager(new GridLayoutManager(this,2));
         myplant_recycler.addItemDecoration(
                 new DividerItemDecoration(this, DividerItemDecoration.VERTICAL)
         );
-        myplant_recycler.setAdapter(new Adapter());
+        myplant_recycler.setAdapter(garden_adapter);
 
 
         searchadd_btn.setOnClickListener(new View.OnClickListener() {
@@ -213,9 +212,7 @@ public class MyGardenActivity extends AppCompatActivity {
         switch(requestCode){
             case ADD_PLANT:
                 if(resultCode == RESULT_OK){
-                    //TODO: si no se ha actualizado la lista, indicar que se actualice
-                    garden_adapter.notifyDataSetChanged();
-
+                   new MyGardenActivity.GetAllPlants(this, plantDao).execute();
                 }
 
         }

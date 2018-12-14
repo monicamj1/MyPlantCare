@@ -126,8 +126,8 @@ public class AddPlantActivity extends AppCompatActivity {
 
         String name = plantName_edit.getText().toString();
         String specie= specieName_view.getText().toString();
-        Date birthday = dia(birthdate_dayOfMonth,birthdate_month,birthdate_year);
-        Date lastWatering = dia(waterdate_dayOfMonth, waterdate_month, waterdate_year);
+        Date birthday = dia(birthdate_dayOfMonth+0,birthdate_month+1,birthdate_year+0);
+        Date lastWatering = dia(waterdate_dayOfMonth+0, waterdate_month+1, waterdate_year+0);
         int reminder = Integer.parseInt(wateringNumber_edit.getText().toString());
         Plant plant = new Plant(name, specie, "",
                 birthday, reminder,
@@ -135,6 +135,7 @@ public class AddPlantActivity extends AppCompatActivity {
                 "http://www.mijardin.es/wp-content/uploads/2017/01/cultivar-la-planta-del-dinero.jpg");
 
         new AddPlantActivity.InsertTask(plantDao).execute(plant);
+        setResult(RESULT_OK);
         finish();
 
     }

@@ -14,6 +14,7 @@ import android.support.annotation.RequiresApi;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Menu;
@@ -32,15 +33,17 @@ import com.bumptech.glide.request.RequestOptions;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.List;
 
 public class MyPlantActivity extends AppCompatActivity {
 
     //Modelo
     Plant myPlant;
-    String[] gallery_images;
+    List<String> gallery_images = new ArrayList<>();
 
     //referencias
     private ImageView profileImage;
@@ -50,6 +53,8 @@ public class MyPlantActivity extends AppCompatActivity {
     private TextView watering;
     private TextView waterDays;
     private Button addImage_btn;
+    RecyclerView gallery;
+    //Adapter gallery_adapter;
 
     AppDatabase db;
     DAO_myPlant plantDao;
@@ -76,7 +81,6 @@ public class MyPlantActivity extends AppCompatActivity {
         db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "AppDatabase").build();
 
         plantDao = db.plantDao();
-        //db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "AppDatabase").build();
 
 
         myPlant = new Plant("Lola la flora", "Desconocido", "",
@@ -84,9 +88,23 @@ public class MyPlantActivity extends AppCompatActivity {
                 dia(18,11,2018), null,
                 "http://www.mijardin.es/wp-content/uploads/2017/01/cultivar-la-planta-del-dinero.jpg");
 
-       // db.plantDao().insertPnat(myPlant);
+        gallery_images.add(null);
+        gallery_images.add("https://cdn.shopify.com/s/files/1/0150/6262/products/the-sill_zz-plant_august_blush_4_1024x1024.jpg?v=1537554239");
+        gallery_images.add("https://cdn.shopify.com/s/files/1/0150/6262/products/the-sill_zz-plant_august_blush_4_1024x1024.jpg?v=1537554239");
+        gallery_images.add("https://cdn.shopify.com/s/files/1/0150/6262/products/the-sill_zz-plant_august_blush_4_1024x1024.jpg?v=1537554239");
+        gallery_images.add("https://cdn.shopify.com/s/files/1/0150/6262/products/the-sill_zz-plant_august_blush_4_1024x1024.jpg?v=1537554239");
+        gallery_images.add("https://cdn.shopify.com/s/files/1/0150/6262/products/the-sill_zz-plant_august_blush_4_1024x1024.jpg?v=1537554239");
+        gallery_images.add("https://cdn.shopify.com/s/files/1/0150/6262/products/the-sill_zz-plant_august_blush_4_1024x1024.jpg?v=1537554239");
 
-       // db.plantDao().loadPlantById(1);
+        gallery = findViewById(R.id.myplant_recycler);
+
+
+        //gallery_adapter = new Adapter();
+
+
+        // myplant_recycler.setLayoutManager(new GridLayoutManager(this,2));
+
+       // gallery.setAdapter(new Adapter());
 
         Intent intent = getIntent();
 
@@ -165,7 +183,13 @@ public class MyPlantActivity extends AppCompatActivity {
 
     }
 
+
+    public void onImageClick(int pos){
+        //TODO: Abrir actividad fotografía
+    }
+
     /*
+
     //RECYCLERVIEW TIPO GRID
     class ViewHolder extends RecyclerView.ViewHolder{
         ImageView imageItem_view;
@@ -175,10 +199,10 @@ public class MyPlantActivity extends AppCompatActivity {
             this.imageItem_view = itemView.findViewById(R.id.imageItem_view);
 
 
-            plant_layout.setOnClickListener(new View.OnClickListener() {
+            imageItem_view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    onPlantClick(getAdapterPosition());
+                    onImageClick(getAdapterPosition());
                 }
             });
         }
@@ -192,16 +216,16 @@ public class MyPlantActivity extends AppCompatActivity {
         }
     }
 
-    class Adapter extends RecyclerView.Adapter<MyPlantActivity.ViewHolder>{
+    class Adapter extends RecyclerView.Adapter<ViewHolder>{
 
         @Override
-        public MyPlantActivity.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View itemView = getLayoutInflater().inflate(R.layout.myplant_item, parent, false);
+        public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            View itemView = getLayoutInflater().inflate(R.layout.image_item, parent, false);
             return new ViewHolder(itemView);
         }
 
         @Override
-        public void onBindViewHolder(MyPlantActivity.ViewHolder holder, int position) {
+        public void onBindViewHolder(ViewHolder holder, int position) {
             holder.bind(gallery_images.get(position));
         }
 
@@ -239,7 +263,7 @@ public class MyPlantActivity extends AppCompatActivity {
         switch(requestCode){
             case EDIT_PLANT:
                 if(resultCode == RESULT_OK) {
-                    //TODO: Añadir planta a la base de datos
+                    //TODO: Actualizar planta en la base de datos
                 }
                     break;
             case REQUEST_IMAGE_CAPTURE:
