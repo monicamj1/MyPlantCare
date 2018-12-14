@@ -8,12 +8,14 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Camera;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.provider.MediaStore;
 import android.support.annotation.RequiresApi;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -42,8 +44,9 @@ import java.util.List;
 public class MyPlantActivity extends AppCompatActivity {
 
     //Modelo
-    Plant myPlant;
-    List<String> gallery_images = new ArrayList<>();
+    List<Plant> myPlant;
+    List<Bitmap> gallery_images = new ArrayList<>();
+    int id_plant;
 
     //referencias
     private ImageView profileImage;
@@ -54,7 +57,7 @@ public class MyPlantActivity extends AppCompatActivity {
     private TextView waterDays;
     private Button addImage_btn;
     RecyclerView gallery;
-    //Adapter gallery_adapter;
+    Adapter gallery_adapter;
 
     AppDatabase db;
     DAO_myPlant plantDao;
@@ -78,46 +81,30 @@ public class MyPlantActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_plant);
 
-        db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "AppDatabase").build();
-
-        plantDao = db.plantDao();
-
-
-        myPlant = new Plant("Lola la flora", "Desconocido", "",
-                dia(18,11,2018), 5,
-                dia(18,11,2018), null,
-                "http://www.mijardin.es/wp-content/uploads/2017/01/cultivar-la-planta-del-dinero.jpg");
-
         gallery_images.add(null);
-        gallery_images.add("https://cdn.shopify.com/s/files/1/0150/6262/products/the-sill_zz-plant_august_blush_4_1024x1024.jpg?v=1537554239");
-        gallery_images.add("https://cdn.shopify.com/s/files/1/0150/6262/products/the-sill_zz-plant_august_blush_4_1024x1024.jpg?v=1537554239");
-        gallery_images.add("https://cdn.shopify.com/s/files/1/0150/6262/products/the-sill_zz-plant_august_blush_4_1024x1024.jpg?v=1537554239");
-        gallery_images.add("https://cdn.shopify.com/s/files/1/0150/6262/products/the-sill_zz-plant_august_blush_4_1024x1024.jpg?v=1537554239");
-        gallery_images.add("https://cdn.shopify.com/s/files/1/0150/6262/products/the-sill_zz-plant_august_blush_4_1024x1024.jpg?v=1537554239");
-        gallery_images.add("https://cdn.shopify.com/s/files/1/0150/6262/products/the-sill_zz-plant_august_blush_4_1024x1024.jpg?v=1537554239");
 
-        gallery = findViewById(R.id.myplant_recycler);
-
+       // gallery = findViewById(R.id.myplant_recycler);
 
         //gallery_adapter = new Adapter();
 
+       // gallery.setLayoutManager(new GridLayoutManager(this,3));
 
-        // myplant_recycler.setLayoutManager(new GridLayoutManager(this,2));
-
-       // gallery.setAdapter(new Adapter());
+       // gallery.setAdapter(gallery_adapter);
 
         Intent intent = getIntent();
 
-        int id;
+
         if(intent != null){
             //TODO: recibir ID de la planta y recoger todos los campos necesarios
-            id = intent.getIntExtra("index", -1);
-            if (id == -1) {
+            id_plant = intent.getIntExtra("index", -1);
+            if (id_plant == -1) {
                 // ERROR: Ese id no existe.
             } else {
-                Log.i("MyPlantCare", "Id Planta: " + id);
+                Log.i("MyPlantCare", "Id Planta: " + id_plant);
             }
         }
+
+
 
         namePlant = findViewById(R.id.name_view);
         specieName = findViewById(R.id.cientific_view);
@@ -129,25 +116,59 @@ public class MyPlantActivity extends AppCompatActivity {
 
        profileImage = findViewById(R.id.profileImage_view);
 
+
+        db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "AppDatabase").build();
+
+        plantDao = db.plantDao();
+
+        new MyPlantActivity.GetPlant(this, plantDao).execute();
+
+    }
+
+    //Get Plant from DB
+    public static class GetPlant extends AsyncTask<Void, Void, List<Plant>> {
+        private MyPlantActivity activity;
+        private DAO_myPlant plantDao;
+
+        GetPlant(MyPlantActivity activity, DAO_myPlant dao) {
+            this.plantDao = dao;
+            this.activity = activity;
+        }
+
+        @Override
+        protected List<Plant> doInBackground(Void... voids) {
+            //TODO: Buscar manera de pasar la variable id_plant dentro de una public static class
+            return plantDao.loadPlantById(1);
+        }
+
+        @Override
+        protected void onPostExecute(List<Plant> plant) {
+            super.onPostExecute(plant);
+            activity.setPlantFields(plant);
+        }
+    }
+
+    private void setPlantFields(List<Plant> plant) {
+        myPlant = plant;
         Glide.with(this)
-                .load(myPlant.getProfile())
+                .load(myPlant.get(0).getProfile())
                 .apply(RequestOptions.circleCropTransform())
                 .into(profileImage);
 
 
-        namePlant.setText(myPlant.getName());
-        specieName.setText(myPlant.getScientific_name());
-        birthday.setText(String.format("%1$tm-%1$te-%1$tY", myPlant.getBirthday()));
+        namePlant.setText(myPlant.get(0).getName());
+        specieName.setText(myPlant.get(0).getScientific_name());
+        birthday.setText(String.format("%1$tm-%1$te-%1$tY", myPlant.get(0).getBirthday()));
         Date now = new Date();
-        Date last = myPlant.getLast_watering_day();
+        Date last = myPlant.get(0).getLast_watering_day();
         long diffTime = now.getTime() - last.getTime();
         long diffDays = diffTime / (1000 * 60 * 60 * 24);
-        int days = myPlant.getReminder() - (int)diffDays;
+        int days = myPlant.get(0).getReminder() - (int)diffDays;
         if(days <= 0){
             days = 0;
         }
         watering.setText("Watering in "+days+" days");
-        waterDays.setText(Integer.toString(myPlant.getReminder()));
+        waterDays.setText(Integer.toString(myPlant.get(0).getReminder()));
 
 
     }
@@ -160,7 +181,6 @@ public class MyPlantActivity extends AppCompatActivity {
     //CAMARA
     public void openCamera(View view) {
         if(checkCameraHardware(this)==true){
-            //getCameraInstance();
             dispatchTakePictureIntent();
         }
     }
@@ -188,15 +208,17 @@ public class MyPlantActivity extends AppCompatActivity {
         //TODO: Abrir actividad fotografía
     }
 
-    /*
+
 
     //RECYCLERVIEW TIPO GRID
     class ViewHolder extends RecyclerView.ViewHolder{
         ImageView imageItem_view;
+        TextView addImage_view;
 
         public ViewHolder(View itemView) {
             super(itemView);
             this.imageItem_view = itemView.findViewById(R.id.imageItem_view);
+            this.addImage_view = itemView.findViewById(R.id.addImage_view);
 
 
             imageItem_view.setOnClickListener(new View.OnClickListener() {
@@ -207,11 +229,10 @@ public class MyPlantActivity extends AppCompatActivity {
             });
         }
 
-        public void bind(Plant item) {
-            Glide.with(MyPlantActivity.this)
-                    .load(item.getProfile())
-                    .apply(RequestOptions.circleCropTransform())
-                    .into(imageItem_view);
+        public void bind(Bitmap item) {
+            if(item == null){
+                addImage_view.setText("");
+            }
 
         }
     }
@@ -234,7 +255,7 @@ public class MyPlantActivity extends AppCompatActivity {
             return gallery_images.size();
         }
 
-    }*/
+    }
 
     // CREAR MENÚ
     public boolean onCreateOptionsMenu(Menu menu){
@@ -272,6 +293,7 @@ public class MyPlantActivity extends AppCompatActivity {
                     Bitmap image = (Bitmap) data.getExtras().get("data");
                     // ImageView imageview = findViewById(R.id.image1_view);
                     // imageview.setImageBitmap(image);
+                    gallery_images.add(image);
                 }
                 break;
 
