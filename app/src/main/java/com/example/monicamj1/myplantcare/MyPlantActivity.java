@@ -15,6 +15,7 @@ import android.support.annotation.RequiresApi;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Menu;
@@ -42,9 +43,9 @@ import java.util.List;
 public class MyPlantActivity extends AppCompatActivity {
 
     //Modelo
-    List<Plant> myPlant;
+    static List<Plant> myPlant;
     List<Bitmap> gallery_images = new ArrayList<>();
-    int id_plant;
+    static int id_plant;
 
     //referencias
     private ImageView profileImage;
@@ -79,15 +80,16 @@ public class MyPlantActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_plant);
 
+
         gallery_images.add(null);
 
-       // gallery = findViewById(R.id.myplant_recycler);
+       //gallery = findViewById(R.id.myplant_recycler);
 
         //gallery_adapter = new Adapter();
 
-       // gallery.setLayoutManager(new GridLayoutManager(this,3));
+       //gallery.setLayoutManager(new GridLayoutManager(this,3));
 
-       // gallery.setAdapter(gallery_adapter);
+       //gallery.setAdapter(gallery_adapter);
 
         Intent intent = getIntent();
 
@@ -135,8 +137,7 @@ public class MyPlantActivity extends AppCompatActivity {
 
         @Override
         protected List<Plant> doInBackground(Void... voids) {
-            //TODO: Buscar manera de pasar la variable id_plant dentro de una public static class
-            return plantDao.loadPlantById(1);
+            return plantDao.loadPlantById(id_plant);
         }
 
         @Override
@@ -168,8 +169,38 @@ public class MyPlantActivity extends AppCompatActivity {
         watering.setText("Watering in "+days+" days");
         waterDays.setText(Integer.toString(myPlant.get(0).getReminder()));
 
+    }
+
+    //Delete Plant from DB
+    public static class DeletePlant extends AsyncTask<Void, Void, List<Plant>> {
+        private MyPlantActivity activity;
+        private DAO_myPlant plantDao;
+
+        DeletePlant(MyPlantActivity activity, DAO_myPlant dao) {
+            this.plantDao = dao;
+            this.activity = activity;
+        }
+
+        @Override
+        protected List<Plant> doInBackground(Void... voids) {
+            plantDao.deletePlant(myPlant.get(0));
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(List<Plant> plant) {
+            activity.finishActivity();
+
+        }
 
     }
+
+    public void finishActivity(){
+        setResult(RESULT_OK);
+        finish();
+    }
+
+
 
     //ACTUALIZAR RIEGO
     public void updateWatering(View view){
@@ -267,11 +298,11 @@ public class MyPlantActivity extends AppCompatActivity {
             case R.id.edit_plant:
                 Intent intent = new Intent(this, AddPlantActivity.class);
                 //TODO: Enviar ID de la planta
-                intent.putExtra("index", 3);
+                intent.putExtra("index", id_plant);
                 startActivityForResult(intent, EDIT_PLANT);
                 break;
             case R.id.delete_plant:
-                //TODO: borrar planta de la lista de plantas
+                new MyPlantActivity.DeletePlant(this, plantDao).execute();
                 break;
         }
         return true;
@@ -282,7 +313,7 @@ public class MyPlantActivity extends AppCompatActivity {
         switch(requestCode){
             case EDIT_PLANT:
                 if(resultCode == RESULT_OK) {
-                    //TODO: Actualizar planta en la base de datos
+                    new MyPlantActivity.GetPlant(this, plantDao).execute();
                 }
                     break;
             case REQUEST_IMAGE_CAPTURE:

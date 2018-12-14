@@ -25,4 +25,6 @@ public interface DAO_myPlant {
 
     @Delete
     void deletePlant(Plant plant);
+
+
 }
