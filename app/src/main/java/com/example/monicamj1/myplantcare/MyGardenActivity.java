@@ -36,7 +36,7 @@ import static com.example.monicamj1.myplantcare.AddPlantActivity.dia;
 public class MyGardenActivity extends AppCompatActivity {
 
     //Modelo
-    List<Plant> myplant_list;
+    static List<Plant> myplant_list;
 
     //Referencias
     RecyclerView myplant_recycler;
@@ -119,6 +119,21 @@ public class MyGardenActivity extends AppCompatActivity {
     }
 
 
+    //Update Plant in DB
+    public static class UpdatePlant extends AsyncTask<Plant, Void, Void> {
+        private DAO_myPlant plantDao;
+
+        UpdatePlant(DAO_myPlant dao) {
+            this.plantDao = dao;
+        }
+
+        @Override
+        protected Void doInBackground(Plant... plants) {
+            plantDao.updatePlant(plants[0]);
+            return null;
+        }
+    }
+
     private void onPlantClick(int pos) {
         Intent intent = new Intent(this, MyPlantActivity.class);
         int index = myplant_list.get(pos).myPlant_id;
@@ -127,7 +142,11 @@ public class MyGardenActivity extends AppCompatActivity {
     }
 
     public void updateWatering(int pos){
-        //TODO: actualizar recordatorio de riego
+        Date now = new Date();
+        myplant_list.get(pos).setLast_watering_day(now);
+        Plant watered_plant = myplant_list.get(pos);
+        new MyGardenActivity.UpdatePlant(plantDao).execute(watered_plant);
+        new MyGardenActivity.GetAllPlants(this, plantDao).execute();
     }
 
     class ViewHolder extends RecyclerView.ViewHolder{
