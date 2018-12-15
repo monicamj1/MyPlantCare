@@ -195,16 +195,36 @@ public class MyPlantActivity extends AppCompatActivity {
 
     }
 
+    //Update Plant
+    public static class UpdatePlant extends AsyncTask<Void, Void, Void> {
+        private MyPlantActivity activity;
+        private DAO_myPlant plantDao;
+
+        UpdatePlant(MyPlantActivity activity, DAO_myPlant dao) {
+            this.plantDao = dao;
+            this.activity = activity;
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            plantDao.updatePlant(myPlant.get(0));
+            return null;
+        }
+    }
+
+
     public void finishActivity(){
         setResult(RESULT_OK);
         finish();
     }
 
 
-
     //ACTUALIZAR RIEGO
     public void updateWatering(View view){
-        //Actualizar recordatorio de riego
+        Date now = new Date();
+        myPlant.get(0).setLast_watering_day(now);
+        new MyPlantActivity.UpdatePlant(this, plantDao).execute();
+        new MyPlantActivity.GetPlant(this, plantDao).execute();
     }
 
     //CAMARA
