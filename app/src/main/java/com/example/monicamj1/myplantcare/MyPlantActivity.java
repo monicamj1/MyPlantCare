@@ -45,7 +45,7 @@ public class MyPlantActivity extends AppCompatActivity {
     //Modelo
     static List<Plant> myPlant;
     List<Bitmap> gallery_images = new ArrayList<>();
-    static int id_plant;
+    int id_plant = -1;
 
     //referencias
     private ImageView profileImage;
@@ -104,7 +104,6 @@ public class MyPlantActivity extends AppCompatActivity {
         }
 
 
-
         namePlant = findViewById(R.id.name_view);
         specieName = findViewById(R.id.cientific_view);
         birthday = findViewById(R.id.birthday_view);
@@ -120,12 +119,12 @@ public class MyPlantActivity extends AppCompatActivity {
 
         plantDao = db.plantDao();
 
-        new MyPlantActivity.GetPlant(this, plantDao).execute();
+        new MyPlantActivity.GetPlant(this, plantDao).execute(id_plant);
 
     }
 
     //Get Plant from DB
-    public static class GetPlant extends AsyncTask<Void, Void, List<Plant>> {
+    public static class GetPlant extends AsyncTask<Integer, Void, List<Plant>> {
         private MyPlantActivity activity;
         private DAO_myPlant plantDao;
 
@@ -135,8 +134,8 @@ public class MyPlantActivity extends AppCompatActivity {
         }
 
         @Override
-        protected List<Plant> doInBackground(Void... voids) {
-            return plantDao.loadPlantById(id_plant);
+        protected List<Plant> doInBackground(Integer... ids) {
+            return plantDao.loadPlantById(ids[0]);
         }
 
         @Override

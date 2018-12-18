@@ -14,6 +14,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -24,7 +25,7 @@ public class AddPlantActivity extends AppCompatActivity {
     // model
     private int birthdate_year, birthdate_month, birthdate_dayOfMonth;
     private int waterdate_year, waterdate_month, waterdate_dayOfMonth;
-    static int id_plant;
+    int id_plant;
 
     //Referencias
     Button addToGarden_btn;
@@ -82,7 +83,7 @@ public class AddPlantActivity extends AppCompatActivity {
             if (id_plant == -1) {
                 setNow();
             } else {
-                new AddPlantActivity.GetFields(this, plantDao).execute();
+                new AddPlantActivity.GetFields(this, plantDao).execute(id_plant);
             }
         }
 
@@ -103,7 +104,7 @@ public class AddPlantActivity extends AppCompatActivity {
     }
 
     //Get Plant from DB
-    public static class GetFields extends AsyncTask<Void, Void, List<Plant>> {
+    public static class GetFields extends AsyncTask<Integer, Void, List<Plant>> {
         private AddPlantActivity activity;
         private DAO_myPlant plantDao;
 
@@ -113,8 +114,8 @@ public class AddPlantActivity extends AppCompatActivity {
         }
 
         @Override
-        protected List<Plant> doInBackground(Void... voids) {
-            return plantDao.loadPlantById(id_plant);
+        protected List<Plant> doInBackground(Integer... ids) {
+            return plantDao.loadPlantById(ids[0]);
         }
 
         @Override
@@ -126,9 +127,11 @@ public class AddPlantActivity extends AppCompatActivity {
 
     private void setPlantFields(List<Plant> plant){
         plantName_edit.setText(plant.get(0).getName());
-        wateringNumber_edit.setText(plant.get(0).getReminder());
-       // birthDate_edit.setText(String.format("%1$tm/%1$te/%1$tY", plant.get(0).getBirthday()));
-        //lastWateringDate_edit.setText(String.format("%1$tm/%1$te/%1$tY", plant.get(0).getLast_watering_day()));
+        wateringNumber_edit.setText(Integer.toString(plant.get(0).getReminder()));
+        SimpleDateFormat fmt = new SimpleDateFormat("dd/MM/yyyy");
+        birthDate_edit.setText(fmt.format(plant.get(0).getBirthday()));
+        lastWateringDate_edit.setText(fmt.format(plant.get(0).getLast_watering_day()));
+       
 
     }
 
