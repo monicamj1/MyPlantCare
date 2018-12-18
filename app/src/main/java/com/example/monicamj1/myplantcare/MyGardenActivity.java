@@ -75,7 +75,8 @@ public class MyGardenActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                Intent intent = new Intent(MyGardenActivity.this, AddPlantActivity.class);
-                startActivityForResult(intent, ADD_PLANT);
+                intent.putExtra("index", -1);
+               startActivityForResult(intent, ADD_PLANT);
             }
         });
 

@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -16,12 +17,14 @@ import android.widget.Toast;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.List;
 
 public class AddPlantActivity extends AppCompatActivity {
 
     // model
     private int birthdate_year, birthdate_month, birthdate_dayOfMonth;
     private int waterdate_year, waterdate_month, waterdate_dayOfMonth;
+    static int id_plant;
 
     //Referencias
     Button addToGarden_btn;
@@ -51,7 +54,7 @@ public class AddPlantActivity extends AppCompatActivity {
         birthdate_dayOfMonth = cal.get(Calendar.DAY_OF_MONTH);
 
         waterdate_dayOfMonth = cal.get(Calendar.DAY_OF_MONTH);
-        waterdate_month = birthdate_month = cal.get(Calendar.MONTH);
+        waterdate_month = cal.get(Calendar.MONTH);
         waterdate_year =cal.get(Calendar.YEAR);
     }
 
@@ -60,7 +63,7 @@ public class AddPlantActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_plant);
 
-        setNow();
+
 
         addToGarden_btn = findViewById(R.id.addToGarden_btn);
         plantName_edit = findViewById(R.id.plantName_edit);
@@ -74,9 +77,13 @@ public class AddPlantActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
 
-        if(intent != null){
-            Toast.makeText(this, "Is not null", Toast.LENGTH_SHORT).show();
-            //TODO: Recoger nombre de la especie y/o índice
+        if(intent != null) {
+            id_plant = intent.getIntExtra("index", -1);
+            if (id_plant == -1) {
+                setNow();
+            } else {
+                new AddPlantActivity.GetFields(this, plantDao).execute();
+            }
         }
 
     }
@@ -93,6 +100,36 @@ public class AddPlantActivity extends AppCompatActivity {
             plantDao.insertPnat(plants[0]);
             return null;
         }
+    }
+
+    //Get Plant from DB
+    public static class GetFields extends AsyncTask<Void, Void, List<Plant>> {
+        private AddPlantActivity activity;
+        private DAO_myPlant plantDao;
+
+        GetFields(AddPlantActivity activity, DAO_myPlant dao) {
+            this.plantDao = dao;
+            this.activity = activity;
+        }
+
+        @Override
+        protected List<Plant> doInBackground(Void... voids) {
+            return plantDao.loadPlantById(id_plant);
+        }
+
+        @Override
+        protected void onPostExecute(List<Plant> plant) {
+            super.onPostExecute(plant);
+            activity.setPlantFields(plant);
+        }
+    }
+
+    private void setPlantFields(List<Plant> plant){
+        plantName_edit.setText(plant.get(0).getName());
+        wateringNumber_edit.setText(plant.get(0).getReminder());
+       // birthDate_edit.setText(String.format("%1$tm/%1$te/%1$tY", plant.get(0).getBirthday()));
+        //lastWateringDate_edit.setText(String.format("%1$tm/%1$te/%1$tY", plant.get(0).getLast_watering_day()));
+
     }
 
     //formato Birthday
@@ -122,21 +159,27 @@ public class AddPlantActivity extends AppCompatActivity {
     }
 
     public void addPlant(View view){
-        Toast.makeText(this, "Added plant", Toast.LENGTH_SHORT).show();
+        if (id_plant == -1) {
+            Toast.makeText(this, "Added plant", Toast.LENGTH_SHORT).show();
+            String name = plantName_edit.getText().toString();
+            String specie= specieName_view.getText().toString();
+            Date birthday = dia(birthdate_dayOfMonth+0,birthdate_month+1,birthdate_year+0);
+            Date lastWatering = dia(waterdate_dayOfMonth+0, waterdate_month+1, waterdate_year+0);
+            int reminder = Integer.parseInt(wateringNumber_edit.getText().toString());
+            Plant plant = new Plant(name, specie, "",
+                    birthday, reminder,
+                    lastWatering, null,
+                    "http://www.mijardin.es/wp-content/uploads/2017/01/cultivar-la-planta-del-dinero.jpg");
 
-        String name = plantName_edit.getText().toString();
-        String specie= specieName_view.getText().toString();
-        Date birthday = dia(birthdate_dayOfMonth+0,birthdate_month+1,birthdate_year+0);
-        Date lastWatering = dia(waterdate_dayOfMonth+0, waterdate_month+1, waterdate_year+0);
-        int reminder = Integer.parseInt(wateringNumber_edit.getText().toString());
-        Plant plant = new Plant(name, specie, "",
-                birthday, reminder,
-                lastWatering, null,
-                "http://www.mijardin.es/wp-content/uploads/2017/01/cultivar-la-planta-del-dinero.jpg");
+            new AddPlantActivity.InsertTask(plantDao).execute(plant);
+            setResult(RESULT_OK);
+            finish();
+        } else {
+            //TODO: Actualizar planta
+            setResult(RESULT_OK);
+            finish();
+        }
 
-        new AddPlantActivity.InsertTask(plantDao).execute(plant);
-        setResult(RESULT_OK);
-        finish();
 
     }
 

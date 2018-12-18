@@ -95,7 +95,6 @@ public class MyPlantActivity extends AppCompatActivity {
 
 
         if(intent != null){
-            //TODO: recibir ID de la planta y recoger todos los campos necesarios
             id_plant = intent.getIntExtra("index", -1);
             if (id_plant == -1) {
                 // ERROR: Ese id no existe.
@@ -315,7 +314,6 @@ public class MyPlantActivity extends AppCompatActivity {
         switch(item.getItemId()){
             case R.id.edit_plant:
                 Intent intent = new Intent(this, AddPlantActivity.class);
-                //TODO: Enviar ID de la planta
                 intent.putExtra("index", id_plant);
                 startActivityForResult(intent, EDIT_PLANT);
                 break;
