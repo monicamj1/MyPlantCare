@@ -188,7 +188,6 @@ public class MyPlantActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(List<Plant> plant) {
             activity.finishActivity();
-
         }
 
     }
@@ -220,7 +219,7 @@ public class MyPlantActivity extends AppCompatActivity {
         Date now = new Date();
         myPlant.get(0).setLast_watering_day(now);
         new MyPlantActivity.UpdatePlant( plantDao).execute();
-        new MyPlantActivity.GetPlant(this, plantDao).execute();
+        new MyPlantActivity.GetPlant(this, plantDao).execute(id_plant);
     }
 
     //CAMARA
@@ -328,7 +327,7 @@ public class MyPlantActivity extends AppCompatActivity {
         switch(requestCode){
             case EDIT_PLANT:
                 if(resultCode == RESULT_OK) {
-                    new MyPlantActivity.GetPlant(this, plantDao).execute();
+                    new MyPlantActivity.GetPlant(this, plantDao).execute(id_plant);
                 }
                     break;
             case REQUEST_IMAGE_CAPTURE:

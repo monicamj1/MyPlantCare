@@ -36,6 +36,10 @@ public class Plant {
         this.profile = profile;
     }
 
+    public void setMyPlantID(int myPlant_id) {
+        this.myPlant_id = myPlant_id;
+    }
+
     public String getName() {
         return name;
     }
