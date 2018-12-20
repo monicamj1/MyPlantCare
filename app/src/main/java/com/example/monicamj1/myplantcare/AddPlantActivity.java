@@ -32,9 +32,9 @@ public class AddPlantActivity extends AppCompatActivity {
     //Referencias
     Button addToGarden_btn;
     EditText plantName_edit;
-    EditText birthDate_edit;
+    TextView birthDate_edit;
     EditText wateringNumber_edit;
-    EditText lastWateringDate_edit;
+    TextView lastWateringDate_edit;
     TextView specieName_view;
 
     //db
@@ -70,9 +70,9 @@ public class AddPlantActivity extends AppCompatActivity {
 
         addToGarden_btn = findViewById(R.id.addToGarden_btn);
         plantName_edit = findViewById(R.id.plantName_edit);
-        birthDate_edit = findViewById(R.id.birthDate_edit);
+        birthDate_edit = findViewById(R.id.birthDate_view);
         wateringNumber_edit = findViewById(R.id.wateringNumber_edit);
-        lastWateringDate_edit = findViewById(R.id.lastWateringDate_edit);
+        lastWateringDate_edit = findViewById(R.id.lastWateringDate_view);
         specieName_view = findViewById(R.id.specieName_view);
 
         db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "AppDatabase").build();
