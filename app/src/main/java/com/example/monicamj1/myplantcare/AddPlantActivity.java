@@ -107,7 +107,6 @@ public class AddPlantActivity extends AppCompatActivity {
     }
 
     //Get Plant from DB
-    //TODO: cambiar list<Plant> a Plant
     public static class GetFields extends AsyncTask<Integer, Void, Plant> {
         private AddPlantActivity activity;
         private DAO_myPlant plantDao;
@@ -214,10 +213,6 @@ public class AddPlantActivity extends AppCompatActivity {
             finish();
         }
     }
-
-
-
-
 
 
 }

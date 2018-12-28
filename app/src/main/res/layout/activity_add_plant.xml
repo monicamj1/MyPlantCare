@@ -154,29 +154,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/lasTime_view" />
 
-    <Button
-        android:id="@+id/btnBirthDate"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="88dp"
-        android:layout_marginRight="88dp"
-        android:onClick="clickDate"
-        android:text="Calendar"
-        app:layout_constraintBaseline_toBaselineOf="@+id/birthDate_view"
-        app:layout_constraintEnd_toEndOf="parent" />
-
     <TextView
         android:id="@+id/birthDate_view"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="0dp"
-        android:layout_marginEnd="16dp"
         android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
         android:layout_marginStart="16dp"
         android:text="88/88/8888"
         app:layout_constraintBottom_toBottomOf="@+id/birthday_view"
-        app:layout_constraintEnd_toStartOf="@+id/btnBirthDate"
-        app:layout_constraintHorizontal_bias="0.486"
         app:layout_constraintStart_toEndOf="@+id/birthday_view"
         app:layout_constraintTop_toTopOf="@+id/birthday_view" />
 
@@ -190,18 +175,36 @@
         app:layout_constraintBaseline_toBaselineOf="@+id/lasTime_view"
         app:layout_constraintStart_toEndOf="@+id/lasTime_view" />
 
-    <Button
-        android:id="@+id/button2"
+    <ImageButton
+        android:id="@+id/imageButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="24dp"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="24dp"
         android:layout_marginStart="16dp"
-        android:onClick="clickWater"
-        android:text="Calendar"
-        app:layout_constraintBaseline_toBaselineOf="@+id/lastWateringDate_view"
+        android:onClick="clickDate"
+        app:layout_constraintBottom_toBottomOf="@+id/birthDate_view"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.205"
-        app:layout_constraintStart_toEndOf="@+id/lastWateringDate_view" />
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/birthDate_view"
+        app:layout_constraintTop_toTopOf="@+id/birthDate_view"
+        app:srcCompat="@android:drawable/ic_menu_my_calendar" />
+
+    <ImageButton
+        android:id="@+id/imageButton2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="24dp"
+        android:layout_marginStart="16dp"
+        android:onClick="clickWater"
+        app:layout_constraintBottom_toBottomOf="@+id/lastWateringDate_view"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/lastWateringDate_view"
+        app:layout_constraintTop_toTopOf="@+id/lastWateringDate_view"
+        app:layout_constraintVertical_bias="0.575"
+        app:srcCompat="@android:drawable/ic_menu_my_calendar" />
 </android.support.constraint.ConstraintLayout>
