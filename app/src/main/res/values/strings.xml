@@ -12,4 +12,6 @@
     <string name="Gallery">Gallery</string>
     <string name="EditPlant">Edit plant</string>
     <string name="Delete">Delete</string>
+    <string name="Confirm">Confirm</string>
+    <string name="Cancel">Cancel</string>
 </resources>

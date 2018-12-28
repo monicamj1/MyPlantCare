@@ -66,8 +66,6 @@ public class AddPlantActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_plant);
 
-
-
         addToGarden_btn = findViewById(R.id.addToGarden_btn);
         plantName_edit = findViewById(R.id.plantName_edit);
         birthDate_edit = findViewById(R.id.birthDate_view);
@@ -93,6 +91,7 @@ public class AddPlantActivity extends AppCompatActivity {
 
     }
 
+    //Insert new Plant in DB
     public static class InsertTask extends AsyncTask<Plant, Void, Void> {
         private DAO_myPlant plantDao;
 
@@ -108,6 +107,7 @@ public class AddPlantActivity extends AppCompatActivity {
     }
 
     //Get Plant from DB
+    //TODO: cambiar list<Plant> a Plant
     public static class GetFields extends AsyncTask<Integer, Void, List<Plant>> {
         private AddPlantActivity activity;
         private DAO_myPlant plantDao;
@@ -130,6 +130,7 @@ public class AddPlantActivity extends AppCompatActivity {
     }
 
     private void setPlantFields(List<Plant> plant){
+        setNow();
         plantName_edit.setText(plant.get(0).getName());
         wateringNumber_edit.setText(Integer.toString(plant.get(0).getReminder()));
         SimpleDateFormat fmt = new SimpleDateFormat("dd/MM/yyyy");
@@ -153,6 +154,9 @@ public class AddPlantActivity extends AppCompatActivity {
             return null;
         }
     }
+
+
+    //TODO: poner los birthdate_year & co a la fecha que se recupera de la DB.
 
     //formato Birthday
     public void clickDate(View view) {

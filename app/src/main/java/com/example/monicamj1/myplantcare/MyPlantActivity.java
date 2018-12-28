@@ -1,9 +1,11 @@
 package com.example.monicamj1.myplantcare;
 
+import android.app.AlertDialog;
 import android.arch.persistence.room.Room;
 import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -316,7 +318,7 @@ public class MyPlantActivity extends AppCompatActivity {
                 startActivityForResult(intent, EDIT_PLANT);
                 break;
             case R.id.delete_plant:
-                new MyPlantActivity.DeletePlant(this, plantDao).execute();
+                alertDelete();
                 break;
         }
         return true;
@@ -343,5 +345,28 @@ public class MyPlantActivity extends AppCompatActivity {
         }
     }
 
+
+
+
+
+
+
+
+
+    //POP-UP DELETE
+    public void alertDelete(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+        builder.setTitle(R.string.Confirm)
+                .setMessage("Do yo want to delete the plant?")
+                .setPositiveButton(R.string.Delete, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        new MyPlantActivity.DeletePlant(MyPlantActivity.this, plantDao).execute();
+                    }
+                })
+                .setNegativeButton(R.string.Cancel, null);
+        builder.create().show();
+    }
 
 }

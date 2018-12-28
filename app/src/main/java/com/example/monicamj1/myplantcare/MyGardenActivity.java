@@ -91,7 +91,6 @@ public class MyGardenActivity extends AppCompatActivity {
 
 
 
-
     //Get Plant Lis from DB
     public static class GetAllPlants extends AsyncTask<Void, Void, List<Plant>> {
         private MyGardenActivity activity;
