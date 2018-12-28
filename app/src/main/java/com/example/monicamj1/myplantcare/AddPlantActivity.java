@@ -86,6 +86,9 @@ public class AddPlantActivity extends AppCompatActivity {
             if (id_plant == -1) {
                 setNow();
                 addToGarden_btn.setText("Add to my garden");
+                Date now = new Date();
+                birthDate_edit.setText(fmt.format(now));
+                lastWateringDate_edit.setText(fmt.format(now));
             } else {
                 addToGarden_btn.setText("Save changes");
                 new AddPlantActivity.GetFields(this, plantDao).execute(id_plant);
