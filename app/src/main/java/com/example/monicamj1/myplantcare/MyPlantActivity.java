@@ -116,8 +116,6 @@ public class MyPlantActivity extends AppCompatActivity {
         birthday = findViewById(R.id.birthday_view);
         watering = findViewById(R.id.watering_view);
         waterDays = findViewById(R.id.waterDays_view);
-
-
         profileImage = findViewById(R.id.profileImage_view);
 
 

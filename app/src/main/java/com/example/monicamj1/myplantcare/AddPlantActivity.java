@@ -137,6 +137,8 @@ public class AddPlantActivity extends AppCompatActivity {
         wateringNumber_edit.setText(Integer.toString(plant.getReminder()));
         birthDate_edit.setText(fmt.format(plant.getBirthday()));
         lastWateringDate_edit.setText(fmt.format(plant.getLast_watering_day()));
+        url.addAll(plant.getImages_url());
+        Log.d("PRUEBA", "cojo imagenes"+url);
     }
 
     //Update plant in DB
@@ -188,15 +190,16 @@ public class AddPlantActivity extends AppCompatActivity {
         Date birthday = dia(birthdate_dayOfMonth+0,birthdate_month+1,birthdate_year+0);
         Date lastWatering = dia(waterdate_dayOfMonth+0, waterdate_month+1, waterdate_year+0);
         int reminder = Integer.parseInt(wateringNumber_edit.getText().toString());
+
         if(id_plant == -1){
             url.add("file:///android_asset/btn.png");
-        }else{
-            url.addAll(plant.getImages_url());
         }
+
         plant = new Plant(name, specie, "",
                 birthday, reminder,
                 lastWatering, url,
                 "file:///android_asset/icon.png");
+
         if (id_plant != -1) {
             plant.setMyPlantID(id_plant);
         }
