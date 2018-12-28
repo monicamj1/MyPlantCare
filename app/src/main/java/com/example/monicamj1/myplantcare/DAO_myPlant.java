@@ -15,7 +15,7 @@ public interface DAO_myPlant {
     void insertPnat(Plant plant);
 
     @Query("SELECT * FROM MyPlants WHERE myPlant_id = :id_plant")
-    List<Plant> loadPlantById(int id_plant);
+    Plant loadPlantById(int id_plant);
 
     @Query("SELECT * FROM MyPlants")
     List<Plant> loadAllMyPlants();

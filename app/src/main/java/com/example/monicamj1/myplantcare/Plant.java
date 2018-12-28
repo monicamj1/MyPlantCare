@@ -4,7 +4,9 @@ import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity(tableName = "MyPlants")
 public class Plant {
@@ -18,14 +20,13 @@ public class Plant {
     private int reminder;
     private Date last_watering_day;
 
-    @Ignore
-    private String images_url[];
+    private List<String> images_url;
 
     private String profile;
 
     Plant() {}
 
-    public Plant(String name, String scientific_name, String web_url, Date birthday, int reminder, Date last_watering_day, String[] images_url, String profile) {
+    public Plant(String name, String scientific_name, String web_url, Date birthday, int reminder, Date last_watering_day, List<String> images_url, String profile) {
         this.name = name;
         this.scientific_name = scientific_name;
         this.web_url = web_url;
@@ -84,11 +85,11 @@ public class Plant {
         this.last_watering_day = last_watering_day;
     }
 
-    public String[] getImages_url() {
+    public List<String> getImages_url() {
         return images_url;
     }
 
-    public void setImages_url(String[] images_url) {
+    public void setImages_url(List<String> images_url) {
         this.images_url = images_url;
     }
 

@@ -8,11 +8,14 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Camera;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.RequiresApi;
 import android.support.constraint.ConstraintLayout;
+import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
@@ -30,8 +33,12 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.GlideBuilder;
+import com.bumptech.glide.load.resource.bitmap.CenterCrop;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
 
+import java.io.File;
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -43,8 +50,8 @@ import java.util.List;
 public class MyPlantActivity extends AppCompatActivity {
 
     //Modelo
-    static List<Plant> myPlant;
-    List<Bitmap> gallery_images = new ArrayList<>();
+    Plant myPlant;
+    List<String> gallery_images = new ArrayList<>();
     int id_plant = -1;
 
     //referencias
@@ -54,7 +61,6 @@ public class MyPlantActivity extends AppCompatActivity {
     private TextView birthday;
     private TextView watering;
     private TextView waterDays;
-    private Button addImage_btn;
     RecyclerView gallery;
     Adapter gallery_adapter;
 
@@ -83,13 +89,13 @@ public class MyPlantActivity extends AppCompatActivity {
 
         gallery_images.add(null);
 
-       //gallery = findViewById(R.id.myplant_recycler);
+       gallery = findViewById(R.id.gallery_view);
 
-        //gallery_adapter = new Adapter();
+        gallery_adapter = new Adapter();
 
-       //gallery.setLayoutManager(new GridLayoutManager(this,3));
+       gallery.setLayoutManager(new GridLayoutManager(this,3));
 
-       //gallery.setAdapter(gallery_adapter);
+       gallery.setAdapter(gallery_adapter);
 
         Intent intent = getIntent();
 
@@ -109,7 +115,6 @@ public class MyPlantActivity extends AppCompatActivity {
         birthday = findViewById(R.id.birthday_view);
         watering = findViewById(R.id.watering_view);
         waterDays = findViewById(R.id.waterDays_view);
-        addImage_btn = findViewById(R.id.addImage_btn);
 
 
        profileImage = findViewById(R.id.profileImage_view);
@@ -124,7 +129,7 @@ public class MyPlantActivity extends AppCompatActivity {
     }
 
     //Get Plant from DB
-    public static class GetPlant extends AsyncTask<Integer, Void, List<Plant>> {
+    public static class GetPlant extends AsyncTask<Integer, Void, Plant> {
         private MyPlantActivity activity;
         private DAO_myPlant plantDao;
 
@@ -134,43 +139,46 @@ public class MyPlantActivity extends AppCompatActivity {
         }
 
         @Override
-        protected List<Plant> doInBackground(Integer... ids) {
+        protected Plant doInBackground(Integer... ids) {
             return plantDao.loadPlantById(ids[0]);
         }
 
         @Override
-        protected void onPostExecute(List<Plant> plant) {
+        protected void onPostExecute(Plant plant) {
             super.onPostExecute(plant);
             activity.setPlantFields(plant);
         }
     }
 
-    private void setPlantFields(List<Plant> plant) {
+    private void setPlantFields(Plant plant) {
         myPlant = plant;
         Glide.with(this)
-                .load(myPlant.get(0).getProfile())
+                .load(plant.getProfile())
                 .apply(RequestOptions.circleCropTransform())
                 .into(profileImage);
 
 
-        namePlant.setText(myPlant.get(0).getName());
-        specieName.setText(myPlant.get(0).getScientific_name());
-        birthday.setText(String.format("%1$tm-%1$te-%1$tY", myPlant.get(0).getBirthday()));
+        namePlant.setText(plant.getName());
+        specieName.setText(plant.getScientific_name());
+        birthday.setText(String.format("%1$te-%1$tm-%1$tY", plant.getBirthday()));
         Date now = new Date();
-        Date last = myPlant.get(0).getLast_watering_day();
+        Date last = plant.getLast_watering_day();
         long diffTime = now.getTime() - last.getTime();
         long diffDays = diffTime / (1000 * 60 * 60 * 24);
-        int days = myPlant.get(0).getReminder() - (int)diffDays;
+        int days = plant.getReminder() - (int)diffDays;
         if(days <= 0){
             days = 0;
         }
         watering.setText("Watering in "+days+" days");
-        waterDays.setText(Integer.toString(myPlant.get(0).getReminder()));
-
+        waterDays.setText(Integer.toString(plant.getReminder()));
+        if(myPlant.getImages_url() != null) {
+            gallery_images.addAll(myPlant.getImages_url());
+        }
+        gallery_adapter.notifyDataSetChanged();
     }
 
     //Delete Plant from DB
-    public static class DeletePlant extends AsyncTask<Void, Void, List<Plant>> {
+    public static class DeletePlant extends AsyncTask<Plant, Void, Void> {
         private MyPlantActivity activity;
         private DAO_myPlant plantDao;
 
@@ -180,21 +188,20 @@ public class MyPlantActivity extends AppCompatActivity {
         }
 
         @Override
-        protected List<Plant> doInBackground(Void... voids) {
-            plantDao.deletePlant(myPlant.get(0));
+        protected Void doInBackground(Plant... plants) {
+            plantDao.deletePlant(plants[0]);
             return null;
         }
 
         @Override
-        protected void onPostExecute(List<Plant> plant) {
+        protected void onPostExecute(Void v) {
             activity.finishActivity();
-
         }
 
     }
 
     //Update Plant in DB
-    public static class UpdatePlant extends AsyncTask<Void, Void, Void> {
+    public static class UpdatePlant extends AsyncTask<Plant, Void, Void> {
         private DAO_myPlant plantDao;
 
         UpdatePlant(DAO_myPlant dao) {
@@ -202,8 +209,8 @@ public class MyPlantActivity extends AppCompatActivity {
         }
 
         @Override
-        protected Void doInBackground(Void... voids) {
-            plantDao.updatePlant(myPlant.get(0));
+        protected Void doInBackground(Plant... plants) {
+            plantDao.updatePlant(plants[0]);
             return null;
         }
     }
@@ -218,13 +225,14 @@ public class MyPlantActivity extends AppCompatActivity {
     //ACTUALIZAR RIEGO
     public void updateWatering(View view){
         Date now = new Date();
-        myPlant.get(0).setLast_watering_day(now);
-        new MyPlantActivity.UpdatePlant( plantDao).execute();
+        myPlant.setLast_watering_day(now);
+        Plant watered_plant = myPlant;
+        new MyPlantActivity.UpdatePlant( plantDao).execute(watered_plant);
         new MyPlantActivity.GetPlant(this, plantDao).execute();
     }
 
     //CAMARA
-    public void openCamera(View view) {
+    public void openCamera() {
         if(checkCameraHardware(this)==true){
             dispatchTakePictureIntent();
         }
@@ -243,14 +251,58 @@ public class MyPlantActivity extends AppCompatActivity {
     private void dispatchTakePictureIntent() {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+            File photoFile = null;
+            try {
+                photoFile = createImageFile();
+            } catch (IOException ex) {
+                // Error occurred while creating the File
+                Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show();
+            }
+            // Continue only if the File was successfully created
+            if (photoFile != null) {
+                Uri photoURI = FileProvider.getUriForFile(this,
+                        "com.example.android.fileprovider",
+                        photoFile);
+                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+                startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+            }
         }
-
     }
 
 
     public void onImageClick(int pos){
+        String img = gallery_images.get(pos);
+        if(img == null){
+            Toast.makeText(this, "Abrir camara", Toast.LENGTH_SHORT).show();
+            openCamera();
+        }
         //TODO: Abrir actividad fotografía
+    }
+
+    String myCurrentPhotoPath;
+
+    private File createImageFile() throws IOException {
+        // Create an image file name
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String imageFileName = "JPEG_" + timeStamp + "_";
+        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        File image = File.createTempFile(
+                imageFileName,  /* prefix */
+                ".jpg",    /* suffix */
+                storageDir      /* directory */
+        );
+
+        // Save a file: path for use with ACTION_VIEW intents
+        myCurrentPhotoPath = image.getAbsolutePath();
+        return image;
+    }
+
+    private void galleryAddPic() {
+        Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+        File f = new File(myCurrentPhotoPath);
+        Uri contentUri = Uri.fromFile(f);
+        mediaScanIntent.setData(contentUri);
+        this.sendBroadcast(mediaScanIntent);
     }
 
 
@@ -265,8 +317,7 @@ public class MyPlantActivity extends AppCompatActivity {
             this.imageItem_view = itemView.findViewById(R.id.imageItem_view);
             this.addImage_view = itemView.findViewById(R.id.addImage_view);
 
-
-            imageItem_view.setOnClickListener(new View.OnClickListener() {
+            itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     onImageClick(getAdapterPosition());
@@ -274,12 +325,6 @@ public class MyPlantActivity extends AppCompatActivity {
             });
         }
 
-        public void bind(Bitmap item) {
-            if(item == null){
-                addImage_view.setText("");
-            }
-
-        }
     }
 
     class Adapter extends RecyclerView.Adapter<ViewHolder>{
@@ -292,7 +337,18 @@ public class MyPlantActivity extends AppCompatActivity {
 
         @Override
         public void onBindViewHolder(ViewHolder holder, int position) {
-            holder.bind(gallery_images.get(position));
+            RequestOptions requestOptions = new RequestOptions();
+            requestOptions = requestOptions.transforms(new CenterCrop(), new RoundedCorners(16));
+            if (gallery_images.get(position) == null) {
+                holder.addImage_view.setVisibility(View.VISIBLE);
+            } else {
+
+                Glide.with(MyPlantActivity.this)
+                        .load(gallery_images.get(position))
+                        .apply(requestOptions)
+                        .into(holder.imageItem_view);
+                holder.addImage_view.setVisibility(View.GONE);
+            }
         }
 
         @Override
@@ -333,11 +389,12 @@ public class MyPlantActivity extends AppCompatActivity {
                     break;
             case REQUEST_IMAGE_CAPTURE:
                 if(resultCode == RESULT_OK){
-                    //TODO: recoger imagen
-                    Bitmap image = (Bitmap) data.getExtras().get("data");
-                    // ImageView imageview = findViewById(R.id.image1_view);
-                    // imageview.setImageBitmap(image);
-                    gallery_images.add(image);
+                    //Bundle extras = data.getExtras();
+                    //Bitmap img = (Bitmap) extras.get("data");
+
+                    //TODO: guardar la array de strings de paths en la base de datos
+
+                    gallery_images.add(myCurrentPhotoPath);
                 }
                 break;
 
