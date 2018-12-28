@@ -108,7 +108,7 @@ public class AddPlantActivity extends AppCompatActivity {
 
     //Get Plant from DB
     //TODO: cambiar list<Plant> a Plant
-    public static class GetFields extends AsyncTask<Integer, Void, List<Plant>> {
+    public static class GetFields extends AsyncTask<Integer, Void, Plant> {
         private AddPlantActivity activity;
         private DAO_myPlant plantDao;
 
@@ -118,24 +118,24 @@ public class AddPlantActivity extends AppCompatActivity {
         }
 
         @Override
-        protected List<Plant> doInBackground(Integer... ids) {
+        protected Plant doInBackground(Integer... ids) {
             return plantDao.loadPlantById(ids[0]);
         }
 
         @Override
-        protected void onPostExecute(List<Plant> plant) {
+        protected void onPostExecute(Plant plant) {
             super.onPostExecute(plant);
             activity.setPlantFields(plant);
         }
     }
 
-    private void setPlantFields(List<Plant> plant){
+    private void setPlantFields(Plant plant){
         setNow();
-        plantName_edit.setText(plant.get(0).getName());
-        wateringNumber_edit.setText(Integer.toString(plant.get(0).getReminder()));
+        plantName_edit.setText(plant.getName());
+        wateringNumber_edit.setText(Integer.toString(plant.getReminder()));
         SimpleDateFormat fmt = new SimpleDateFormat("dd/MM/yyyy");
-        birthDate_edit.setText(fmt.format(plant.get(0).getBirthday()));
-        lastWateringDate_edit.setText(fmt.format(plant.get(0).getLast_watering_day()));
+        birthDate_edit.setText(fmt.format(plant.getBirthday()));
+        lastWateringDate_edit.setText(fmt.format(plant.getLast_watering_day()));
     }
 
     //Update plant in DB

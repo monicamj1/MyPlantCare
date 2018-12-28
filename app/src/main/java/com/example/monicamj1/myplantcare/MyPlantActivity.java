@@ -226,7 +226,7 @@ public class MyPlantActivity extends AppCompatActivity {
     public void updateWatering(View view){
         Date now = new Date();
         myPlant.setLast_watering_day(now);
-        new MyPlantActivity.UpdatePlant( plantDao).execute();
+        new MyPlantActivity.UpdatePlant( plantDao).execute(myPlant);
         new MyPlantActivity.GetPlant(this, plantDao).execute(id_plant);
     }
 
@@ -272,7 +272,6 @@ public class MyPlantActivity extends AppCompatActivity {
     public void onImageClick(int pos){
         String img = gallery_images.get(pos);
         if(img == null){
-            Toast.makeText(this, "Abrir camara", Toast.LENGTH_SHORT).show();
             openCamera();
         }
         //TODO: Abrir actividad fotografía
@@ -388,11 +387,7 @@ public class MyPlantActivity extends AppCompatActivity {
                     break;
             case REQUEST_IMAGE_CAPTURE:
                 if(resultCode == RESULT_OK){
-                    //Bundle extras = data.getExtras();
-                    //Bitmap img = (Bitmap) extras.get("data");
-
                     //TODO: guardar la array de strings de paths en la base de datos
-
                     gallery_images.add(myCurrentPhotoPath);
                 }
                 break;
