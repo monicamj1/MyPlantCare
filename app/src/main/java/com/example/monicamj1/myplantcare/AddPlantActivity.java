@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -26,6 +27,7 @@ public class AddPlantActivity extends AppCompatActivity {
     private int birthdate_year, birthdate_month, birthdate_dayOfMonth;
     private int waterdate_year, waterdate_month, waterdate_dayOfMonth;
     int id_plant;
+    List<String> url = new ArrayList<>();
 
     Plant plant;
 
@@ -42,6 +44,7 @@ public class AddPlantActivity extends AppCompatActivity {
     DAO_myPlant plantDao;
 
     static Calendar cal = new GregorianCalendar();
+    SimpleDateFormat fmt = new SimpleDateFormat("dd/MM/yyyy");
 
     static Date dia(int dia, int mes, int anyo) {
         cal.set(Calendar.YEAR, anyo);
@@ -132,7 +135,6 @@ public class AddPlantActivity extends AppCompatActivity {
         setNow();
         plantName_edit.setText(plant.getName());
         wateringNumber_edit.setText(Integer.toString(plant.getReminder()));
-        SimpleDateFormat fmt = new SimpleDateFormat("dd/MM/yyyy");
         birthDate_edit.setText(fmt.format(plant.getBirthday()));
         lastWateringDate_edit.setText(fmt.format(plant.getLast_watering_day()));
     }
@@ -153,9 +155,6 @@ public class AddPlantActivity extends AppCompatActivity {
             return null;
         }
     }
-
-
-    //TODO: poner los birthdate_year & co a la fecha que se recupera de la DB.
 
     //formato Birthday
     public void clickDate(View view) {
@@ -189,10 +188,15 @@ public class AddPlantActivity extends AppCompatActivity {
         Date birthday = dia(birthdate_dayOfMonth+0,birthdate_month+1,birthdate_year+0);
         Date lastWatering = dia(waterdate_dayOfMonth+0, waterdate_month+1, waterdate_year+0);
         int reminder = Integer.parseInt(wateringNumber_edit.getText().toString());
+        if(id_plant == -1){
+            url.add("file:///android_asset/btn.png");
+        }else{
+            url.addAll(plant.getImages_url());
+        }
         plant = new Plant(name, specie, "",
                 birthday, reminder,
-                lastWatering, null,
-                "http://www.mijardin.es/wp-content/uploads/2017/01/cultivar-la-planta-del-dinero.jpg");
+                lastWatering, url,
+                "file:///android_asset/icon.png");
         if (id_plant != -1) {
             plant.setMyPlantID(id_plant);
         }
@@ -202,13 +206,11 @@ public class AddPlantActivity extends AppCompatActivity {
         if (id_plant == -1) {
             getFields();
             new AddPlantActivity.InsertTask(plantDao).execute(plant);
-            Toast.makeText(this, "Added plant", Toast.LENGTH_SHORT).show();
             setResult(RESULT_OK);
             finish();
         } else {
             getFields();
             new AddPlantActivity.UpdatePlant(this,plantDao).execute(plant);
-            Toast.makeText(this, "Updated plant", Toast.LENGTH_SHORT).show();
             setResult(RESULT_OK);
             finish();
         }

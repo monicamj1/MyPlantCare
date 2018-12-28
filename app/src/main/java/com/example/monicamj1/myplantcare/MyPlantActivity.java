@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.Camera;
 import android.net.Uri;
@@ -41,6 +42,7 @@ import com.bumptech.glide.request.RequestOptions;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -88,16 +90,13 @@ public class MyPlantActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_plant);
 
-
-        gallery_images.add(null);
-
-       gallery = findViewById(R.id.gallery_view);
+        gallery = findViewById(R.id.gallery_view);
 
         gallery_adapter = new Adapter();
 
-       gallery.setLayoutManager(new GridLayoutManager(this,3));
+        gallery.setLayoutManager(new GridLayoutManager(this,3));
 
-       gallery.setAdapter(gallery_adapter);
+        gallery.setAdapter(gallery_adapter);
 
         Intent intent = getIntent();
 
@@ -119,7 +118,7 @@ public class MyPlantActivity extends AppCompatActivity {
         waterDays = findViewById(R.id.waterDays_view);
 
 
-       profileImage = findViewById(R.id.profileImage_view);
+        profileImage = findViewById(R.id.profileImage_view);
 
 
         db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "AppDatabase").build();
@@ -173,9 +172,9 @@ public class MyPlantActivity extends AppCompatActivity {
         }
         watering.setText("Watering in "+days+" days");
         waterDays.setText(Integer.toString(plant.getReminder()));
-        if(myPlant.getImages_url() != null) {
-            gallery_images.addAll(myPlant.getImages_url());
-        }
+
+        gallery_images.clear();
+        gallery_images.addAll(myPlant.getImages_url());
         gallery_adapter.notifyDataSetChanged();
     }
 
@@ -273,7 +272,7 @@ public class MyPlantActivity extends AppCompatActivity {
 
     public void onImageClick(int pos){
         String img = gallery_images.get(pos);
-        if(img == null){
+        if (pos == 0){
             openCamera();
         }
         //TODO: Abrir actividad fotografía
@@ -296,16 +295,6 @@ public class MyPlantActivity extends AppCompatActivity {
         myCurrentPhotoPath = image.getAbsolutePath();
         return image;
     }
-
-    private void galleryAddPic() {
-        Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
-        File f = new File(myCurrentPhotoPath);
-        Uri contentUri = Uri.fromFile(f);
-        mediaScanIntent.setData(contentUri);
-        this.sendBroadcast(mediaScanIntent);
-    }
-
-
 
     //RECYCLERVIEW TIPO GRID
     class ViewHolder extends RecyclerView.ViewHolder{
@@ -339,16 +328,15 @@ public class MyPlantActivity extends AppCompatActivity {
         public void onBindViewHolder(ViewHolder holder, int position) {
             RequestOptions requestOptions = new RequestOptions();
             requestOptions = requestOptions.transforms(new CenterCrop(), new RoundedCorners(16));
-            if (gallery_images.get(position) == null) {
+            if (gallery_images.get(position) == "file:///android_asset/btn.png") {
                 holder.addImage_view.setVisibility(View.VISIBLE);
             } else {
-
-                Glide.with(MyPlantActivity.this)
-                        .load(gallery_images.get(position))
-                        .apply(requestOptions)
-                        .into(holder.imageItem_view);
                 holder.addImage_view.setVisibility(View.GONE);
             }
+            Glide.with(MyPlantActivity.this)
+                    .load(gallery_images.get(position))
+                    .apply(requestOptions)
+                    .into(holder.imageItem_view);
         }
 
         @Override
@@ -405,8 +393,11 @@ public class MyPlantActivity extends AppCompatActivity {
                     break;
             case REQUEST_IMAGE_CAPTURE:
                 if(resultCode == RESULT_OK){
-                    //TODO: guardar la array de strings de paths en la base de datos
                     gallery_images.add(myCurrentPhotoPath);
+                    myPlant.setImages_url(gallery_images);
+                    new MyPlantActivity.UpdatePlant(plantDao).execute(myPlant);
+                    new MyPlantActivity.GetPlant(this, plantDao).execute(id_plant);
+
                 }
                 break;
 
