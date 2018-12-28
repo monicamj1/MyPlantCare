@@ -14,6 +14,7 @@ public interface DAO_myPlant {
     @Insert
     void insertPnat(Plant plant);
 
+    //TODO: Cambiar la lista en MyPlant!!!
     @Query("SELECT * FROM MyPlants WHERE myPlant_id = :id_plant")
     Plant loadPlantById(int id_plant);
 

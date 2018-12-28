@@ -27,12 +27,14 @@ public class AddPlantActivity extends AppCompatActivity {
     private int waterdate_year, waterdate_month, waterdate_dayOfMonth;
     int id_plant;
 
+    Plant plant;
+
     //Referencias
     Button addToGarden_btn;
     EditText plantName_edit;
-    EditText birthDate_edit;
+    TextView birthDate_edit;
     EditText wateringNumber_edit;
-    EditText lastWateringDate_edit;
+    TextView lastWateringDate_edit;
     TextView specieName_view;
 
     //db
@@ -64,13 +66,11 @@ public class AddPlantActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_plant);
 
-
-
         addToGarden_btn = findViewById(R.id.addToGarden_btn);
         plantName_edit = findViewById(R.id.plantName_edit);
-        birthDate_edit = findViewById(R.id.birthDate_edit);
+        birthDate_edit = findViewById(R.id.birthDate_view);
         wateringNumber_edit = findViewById(R.id.wateringNumber_edit);
-        lastWateringDate_edit = findViewById(R.id.lastWateringDate_edit);
+        lastWateringDate_edit = findViewById(R.id.lastWateringDate_view);
         specieName_view = findViewById(R.id.specieName_view);
 
         db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "AppDatabase").build();
@@ -82,13 +82,16 @@ public class AddPlantActivity extends AppCompatActivity {
             id_plant = intent.getIntExtra("index", -1);
             if (id_plant == -1) {
                 setNow();
+                addToGarden_btn.setText("Add to my garden");
             } else {
+                addToGarden_btn.setText("Save changes");
                 new AddPlantActivity.GetFields(this, plantDao).execute(id_plant);
             }
         }
 
     }
 
+    //Insert new Plant in DB
     public static class InsertTask extends AsyncTask<Plant, Void, Void> {
         private DAO_myPlant plantDao;
 
@@ -104,7 +107,8 @@ public class AddPlantActivity extends AppCompatActivity {
     }
 
     //Get Plant from DB
-    public static class GetFields extends AsyncTask<Integer, Void, Plant> {
+    //TODO: cambiar list<Plant> a Plant
+    public static class GetFields extends AsyncTask<Integer, Void, List<Plant>> {
         private AddPlantActivity activity;
         private DAO_myPlant plantDao;
 
@@ -114,26 +118,45 @@ public class AddPlantActivity extends AppCompatActivity {
         }
 
         @Override
-        protected Plant doInBackground(Integer... ids) {
+        protected List<Plant> doInBackground(Integer... ids) {
             return plantDao.loadPlantById(ids[0]);
         }
 
         @Override
-        protected void onPostExecute(Plant plant) {
+        protected void onPostExecute(List<Plant> plant) {
             super.onPostExecute(plant);
             activity.setPlantFields(plant);
         }
     }
 
-    private void setPlantFields(Plant plant){
-        plantName_edit.setText(plant.getName());
-        wateringNumber_edit.setText(Integer.toString(plant.getReminder()));
+    private void setPlantFields(List<Plant> plant){
+        setNow();
+        plantName_edit.setText(plant.get(0).getName());
+        wateringNumber_edit.setText(Integer.toString(plant.get(0).getReminder()));
         SimpleDateFormat fmt = new SimpleDateFormat("dd/MM/yyyy");
-        birthDate_edit.setText(fmt.format(plant.getBirthday()));
-        lastWateringDate_edit.setText(fmt.format(plant.getLast_watering_day()));
-
-
+        birthDate_edit.setText(fmt.format(plant.get(0).getBirthday()));
+        lastWateringDate_edit.setText(fmt.format(plant.get(0).getLast_watering_day()));
     }
+
+    //Update plant in DB
+    public static class UpdatePlant extends AsyncTask<Plant, Void, Void> {
+        private DAO_myPlant plantDao;
+        private AddPlantActivity activity;
+
+        UpdatePlant(AddPlantActivity activity, DAO_myPlant dao) {
+            this.plantDao = dao;
+            this.activity = activity;
+        }
+
+        @Override
+        protected Void doInBackground(Plant... plants) {
+            plantDao.updatePlant(plants[0]);
+            return null;
+        }
+    }
+
+
+    //TODO: poner los birthdate_year & co a la fecha que se recupera de la DB.
 
     //formato Birthday
     public void clickDate(View view) {
@@ -161,29 +184,35 @@ public class AddPlantActivity extends AppCompatActivity {
         }, waterdate_year, waterdate_month, waterdate_dayOfMonth).show();
     }
 
+    public void getFields (){
+        String name = plantName_edit.getText().toString();
+        String specie= specieName_view.getText().toString();
+        Date birthday = dia(birthdate_dayOfMonth+0,birthdate_month+1,birthdate_year+0);
+        Date lastWatering = dia(waterdate_dayOfMonth+0, waterdate_month+1, waterdate_year+0);
+        int reminder = Integer.parseInt(wateringNumber_edit.getText().toString());
+        plant = new Plant(name, specie, "",
+                birthday, reminder,
+                lastWatering, null,
+                "http://www.mijardin.es/wp-content/uploads/2017/01/cultivar-la-planta-del-dinero.jpg");
+        if (id_plant != -1) {
+            plant.setMyPlantID(id_plant);
+        }
+    }
+
     public void addPlant(View view){
         if (id_plant == -1) {
-            Toast.makeText(this, "Added plant", Toast.LENGTH_SHORT).show();
-            String name = plantName_edit.getText().toString();
-            String specie= specieName_view.getText().toString();
-            Date birthday = dia(birthdate_dayOfMonth+0,birthdate_month+1,birthdate_year+0);
-            Date lastWatering = dia(waterdate_dayOfMonth+0, waterdate_month+1, waterdate_year+0);
-            int reminder = Integer.parseInt(wateringNumber_edit.getText().toString());
-            Plant plant = new Plant(name, specie, "",
-                    birthday, reminder,
-                    lastWatering, null,
-                    "http://www.mijardin.es/wp-content/uploads/2017/01/cultivar-la-planta-del-dinero.jpg");
-
+            getFields();
             new AddPlantActivity.InsertTask(plantDao).execute(plant);
+            Toast.makeText(this, "Added plant", Toast.LENGTH_SHORT).show();
             setResult(RESULT_OK);
             finish();
         } else {
-            //TODO: Actualizar planta
+            getFields();
+            new AddPlantActivity.UpdatePlant(this,plantDao).execute(plant);
+            Toast.makeText(this, "Updated plant", Toast.LENGTH_SHORT).show();
             setResult(RESULT_OK);
             finish();
         }
-
-
     }
 
 

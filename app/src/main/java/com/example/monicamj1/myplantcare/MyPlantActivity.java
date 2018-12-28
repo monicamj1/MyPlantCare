@@ -226,9 +226,8 @@ public class MyPlantActivity extends AppCompatActivity {
     public void updateWatering(View view){
         Date now = new Date();
         myPlant.setLast_watering_day(now);
-        Plant watered_plant = myPlant;
-        new MyPlantActivity.UpdatePlant( plantDao).execute(watered_plant);
-        new MyPlantActivity.GetPlant(this, plantDao).execute();
+        new MyPlantActivity.UpdatePlant( plantDao).execute();
+        new MyPlantActivity.GetPlant(this, plantDao).execute(id_plant);
     }
 
     //CAMARA
@@ -384,7 +383,7 @@ public class MyPlantActivity extends AppCompatActivity {
         switch(requestCode){
             case EDIT_PLANT:
                 if(resultCode == RESULT_OK) {
-                    new MyPlantActivity.GetPlant(this, plantDao).execute();
+                    new MyPlantActivity.GetPlant(this, plantDao).execute(id_plant);
                 }
                     break;
             case REQUEST_IMAGE_CAPTURE:
