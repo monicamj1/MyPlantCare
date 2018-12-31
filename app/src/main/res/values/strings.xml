@@ -5,7 +5,7 @@
     <string name="Birthday">Birthday</string>
     <string name="WateringReminder">Watering reminder</string>
     <string name="WaterEveryXDay1">Water every</string>
-    <string name="WaterEveryXDay2" >day</string>
+    <string name="WaterEveryXDay2">day</string>
     <string name="LastTimeWatered">Last time watered</string>
     <string name="Add">Add to my garden</string>
     <string name="AboutSpice">About Specie</string>
@@ -14,4 +14,6 @@
     <string name="Delete">Delete</string>
     <string name="Confirm">Confirm</string>
     <string name="Cancel">Cancel</string>
+    <string name="Following"><![CDATA[>]]></string>
+    <string name="Previous"><![CDATA[<]]></string>
 </resources>

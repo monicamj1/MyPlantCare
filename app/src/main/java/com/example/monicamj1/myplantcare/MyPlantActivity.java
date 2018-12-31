@@ -1,6 +1,7 @@
 package com.example.monicamj1.myplantcare;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.arch.persistence.room.Room;
 import android.Manifest;
 import android.app.Activity;
@@ -29,6 +30,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -272,8 +274,9 @@ public class MyPlantActivity extends AppCompatActivity {
         String img = gallery_images.get(pos);
         if (pos == 0){
             openCamera();
+        }else {
+            openGalleryImage(pos);
         }
-        //TODO: Abrir actividad fotografía
     }
 
     String myCurrentPhotoPath;
@@ -381,12 +384,22 @@ public class MyPlantActivity extends AppCompatActivity {
         builder.create().show();
     }
 
+
+
+    public void openGalleryImage(int pos) {
+        Intent intent = new Intent(this,ShowImageActivity.class);
+        intent.putExtra("pos", pos);
+        intent.putExtra("id", id_plant);
+        startActivityForResult(intent, EDIT_PLANT);
+    }
+
     //RESULTADO DE ACTIVIDADES
     protected void onActivityResult(int requestCode, int resultCode, Intent data){
         switch(requestCode){
             case EDIT_PLANT:
                 if(resultCode == RESULT_OK) {
                     new MyPlantActivity.GetPlant(this, plantDao).execute(id_plant);
+                    gallery_adapter.notifyDataSetChanged();
                 }
                     break;
             case REQUEST_IMAGE_CAPTURE:

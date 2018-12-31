@@ -93,6 +93,15 @@ public class Plant {
         return images_url;
     }
 
+    public List<String> removeImages_url(int p) {
+        this.images_url.remove(p);
+        return images_url;
+    }
+
+    public int imagesSize(){
+        return images_url.size();
+    }
+
     public void setImages_url(List<String> images_url) {
         this.images_url = images_url;
     }
