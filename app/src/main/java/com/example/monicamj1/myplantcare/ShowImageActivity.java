@@ -132,10 +132,13 @@ public class ShowImageActivity extends AppCompatActivity {
     }
 
     public void deleteImage(View view){
-        Log.d("PRUEBA", ""+gallery_images.size()); //size de la lista
-        gallery_images.remove(pos); //TODO: ERROR
-        Log.d("PRUEBA", ""+gallery_images.size()); //size anterior -1
-        myPlant.setImages_url(gallery_images);
+        List<String> list = new ArrayList<>();
+        for(int i=0; i<gallery_images.size();i++){
+            if(i != pos) {
+                list.add(gallery_images.get(i));
+            }
+        }
+        myPlant.setImages_url(list);
         new ShowImageActivity.UpdatePlant(this, plantDao).execute(myPlant);
 
     }
