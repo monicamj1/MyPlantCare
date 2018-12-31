@@ -28,6 +28,7 @@ public class AddPlantActivity extends AppCompatActivity {
     private int waterdate_year, waterdate_month, waterdate_dayOfMonth;
     int id_plant;
     List<String> url = new ArrayList<>();
+    String profile;
 
     Plant plant;
 
@@ -141,7 +142,8 @@ public class AddPlantActivity extends AppCompatActivity {
         birthDate_edit.setText(fmt.format(plant.getBirthday()));
         lastWateringDate_edit.setText(fmt.format(plant.getLast_watering_day()));
         url.addAll(plant.getImages_url());
-        Log.d("PRUEBA", "cojo imagenes"+url);
+        profile = plant.getProfile();
+
     }
 
     //Update plant in DB
@@ -196,12 +198,13 @@ public class AddPlantActivity extends AppCompatActivity {
 
         if(id_plant == -1){
             url.add("file:///android_asset/btn.png");
+            profile = "file:///android_asset/icon.png";
         }
 
         plant = new Plant(name, specie, "",
                 birthday, reminder,
                 lastWatering, url,
-                "file:///android_asset/icon.png");
+                profile);
 
         if (id_plant != -1) {
             plant.setMyPlantID(id_plant);
