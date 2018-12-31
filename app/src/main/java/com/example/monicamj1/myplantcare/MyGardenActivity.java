@@ -235,10 +235,7 @@ public class MyGardenActivity extends AppCompatActivity {
                 }
                 break;
             case MY_PLANT:
-                if(resultCode == RESULT_OK){
                     new MyGardenActivity.GetAllPlants(this, plantDao).execute();
-                }
-
         }
     }
 

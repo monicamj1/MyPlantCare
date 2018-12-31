@@ -67,6 +67,7 @@ public class MyPlantActivity extends AppCompatActivity {
     private TextView birthday;
     private TextView watering;
     private TextView waterDays;
+    private Button about_button;
     RecyclerView gallery;
     Adapter gallery_adapter;
 
@@ -119,6 +120,8 @@ public class MyPlantActivity extends AppCompatActivity {
         watering = findViewById(R.id.watering_view);
         waterDays = findViewById(R.id.waterDays_view);
         profileImage = findViewById(R.id.profileImage_view);
+        about_button = findViewById(R.id.about_button);
+        about_button.setVisibility(View.GONE);
 
 
         db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "AppDatabase").build();

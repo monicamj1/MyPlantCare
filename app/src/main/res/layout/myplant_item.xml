@@ -60,6 +60,7 @@
         app:layout_constraintTop_toBottomOf="@+id/reminder_view"
         tools:text="8 days" />
 
+
     <Button
         android:id="@+id/watered_btn"
         android:layout_width="60dp"
