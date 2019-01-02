@@ -262,7 +262,6 @@ public class MyGardenActivity extends AppCompatActivity {
 
         notificationManager.notify(1, notification);
 
-        // notificationId is a unique int for each notification that you must define
         // notificationManager.notify(1, mBuilder.build());
     }
 

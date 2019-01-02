@@ -170,15 +170,12 @@
       android:id="@+id/watering_view"
       android:layout_width="0dp"
       android:layout_height="wrap_content"
-      android:layout_marginEnd="8dp"
       android:layout_marginLeft="8dp"
-      android:layout_marginRight="8dp"
       android:layout_marginStart="8dp"
       android:layout_marginTop="8dp"
       android:text="88 days"
       android:textColor="@color/Verde_Oscuro"
       android:textSize="18sp"
-      app:layout_constraintEnd_toStartOf="@+id/watering_btn"
       app:layout_constraintStart_toEndOf="@+id/wateringTitle"
       app:layout_constraintTop_toBottomOf="@+id/rule1"
       tools:text="3 days" />
@@ -222,21 +219,8 @@
       android:textColor="@color/Verde_Medio"
       android:textSize="14sp"
       app:layout_constraintBaseline_toBaselineOf="@+id/waterDays_view"
-      app:layout_constraintEnd_toStartOf="@+id/watering_btn"
+      app:layout_constraintEnd_toStartOf="@+id/watered_btn"
       app:layout_constraintStart_toEndOf="@+id/waterDays_view" />
-
-  <Button
-      android:id="@+id/watering_btn"
-      android:layout_width="60dp"
-      android:layout_height="60dp"
-      android:layout_marginEnd="16dp"
-      android:layout_marginRight="16dp"
-      android:layout_marginTop="8dp"
-      android:onClick="updateWatering"
-      android:text="Button"
-      android:textColor="@color/Blanco"
-      app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintTop_toBottomOf="@+id/rule1" />
 
   <TextView
       android:id="@+id/galleryTitle"
@@ -246,14 +230,14 @@
       android:layout_marginLeft="16dp"
       android:layout_marginRight="16dp"
       android:layout_marginStart="16dp"
-      android:layout_marginTop="24dp"
 
+      android:layout_marginTop="8dp"
       android:text="@string/Gallery"
       android:textColor="@color/Verde_Claro"
       android:textSize="14sp"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toBottomOf="@+id/watering_btn" />
+      app:layout_constraintTop_toBottomOf="@+id/watered_btn" />
 
   <android.support.v7.widget.RecyclerView
       android:id="@+id/gallery_view"
@@ -270,6 +254,17 @@
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toBottomOf="@+id/galleryTitle" />
 
+  <ImageButton
+      android:id="@+id/watered_btn"
+      android:layout_width="75dp"
+      android:layout_height="74dp"
+      android:layout_marginEnd="16dp"
+      android:layout_marginRight="16dp"
+      android:layout_marginTop="8dp"
+      android:onClick="updateWatering"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/reminderTitle"
+      app:srcCompat="@android:drawable/ic_menu_myplaces" />
 
 
 </android.support.constraint.ConstraintLayout>
