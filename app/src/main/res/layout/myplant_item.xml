@@ -55,6 +55,7 @@
         android:layout_marginStart="24dp"
         android:layout_marginTop="4dp"
         android:text="TextView"
+        android:textColor="@color/Verde_Oscuro"
         android:textStyle="bold"
         app:layout_constraintStart_toEndOf="@+id/plantimage_view"
         app:layout_constraintTop_toBottomOf="@+id/reminder_view"

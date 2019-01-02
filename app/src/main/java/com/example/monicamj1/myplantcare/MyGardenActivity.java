@@ -2,10 +2,12 @@ package com.example.monicamj1.myplantcare;
 
 import android.arch.persistence.room.Room;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DividerItemDecoration;
@@ -198,6 +200,9 @@ public class MyGardenActivity extends AppCompatActivity {
             int days = item.getReminder() - (int)diffDays;
             if(days <= 0){
                 days = 0;
+                days_view.setTextColor(ContextCompat.getColor(MyGardenActivity.this, R.color.Rosita));
+            }else{
+                days_view.setTextColor(ContextCompat.getColor(MyGardenActivity.this, R.color.Verde_Oscuro));
             }
             days_view.setText( days + " days");
             watered_btn.setText("Watered");

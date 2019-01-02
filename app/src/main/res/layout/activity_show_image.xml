@@ -6,6 +6,8 @@
     android:layout_height="match_parent"
     tools:context=".ShowImageActivity">
 
+
+
     <ImageView
         android:id="@+id/bigImage_view"
         android:layout_width="0dp"
