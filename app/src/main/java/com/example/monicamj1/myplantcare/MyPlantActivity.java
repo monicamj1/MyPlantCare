@@ -19,6 +19,7 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.RequiresApi;
 import android.support.constraint.ConstraintLayout;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -172,6 +173,9 @@ public class MyPlantActivity extends AppCompatActivity {
         int days = plant.getReminder() - (int)diffDays;
         if(days <= 0){
             days = 0;
+            watering.setTextColor(ContextCompat.getColor(MyPlantActivity.this, R.color.Rosita));
+        }else{
+            watering.setTextColor(ContextCompat.getColor(MyPlantActivity.this, R.color.Verde_Oscuro));
         }
         watering.setText("Watering in "+days+" days");
         waterDays.setText(Integer.toString(plant.getReminder()));

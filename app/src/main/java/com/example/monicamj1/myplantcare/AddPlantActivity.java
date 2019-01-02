@@ -191,7 +191,8 @@ public class AddPlantActivity extends AppCompatActivity {
 
     public void getFields (){
         String name = plantName_edit.getText().toString();
-        String specie= specieName_view.getText().toString();
+        //String specie= specieName_view.getText().toString();
+        String specie = "Unkown";
         Date birthday = dia(birthdate_dayOfMonth+0,birthdate_month+1,birthdate_year+0);
         Date lastWatering = dia(waterdate_dayOfMonth+0, waterdate_month+1, waterdate_year+0);
         int reminder = Integer.parseInt(wateringNumber_edit.getText().toString());
