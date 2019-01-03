@@ -10,7 +10,7 @@ import android.support.v4.app.NotificationManagerCompat;
 
 public class Notifications extends Application {
 
-    public static final String CHANNEL_ID = "1";
+    public static final String CHANNEL_ID = "channel_id";
 
     @Override
     public void onCreate() {
@@ -24,9 +24,11 @@ public class Notifications extends Application {
 
     private void createNotificationsChannel(){
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
-            int importance = NotificationManager.IMPORTANCE_DEFAULT;
-
-            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, "channel_1", importance);
+            NotificationChannel channel = new NotificationChannel(
+                    CHANNEL_ID,
+                    "Simple_notification",
+                    NotificationManager.IMPORTANCE_DEFAULT
+            );
             channel.setDescription("This is channel 1");
             channel.setLockscreenVisibility( Notification.VISIBILITY_PUBLIC);
 

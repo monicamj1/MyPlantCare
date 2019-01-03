@@ -56,6 +56,7 @@ public class MyGardenActivity extends AppCompatActivity {
     AppDatabase db;
     DAO_myPlant plantDao;
 
+    //Notifications
     private NotificationManagerCompat notificationManager;
 
     @Override
@@ -235,36 +236,16 @@ public class MyGardenActivity extends AppCompatActivity {
     }
 
     //NOTIFICATION STUFF
-   // public void notifications(){
-        // Create an explicit intent for an Activity in your app
-       /* Intent intent = new Intent(this, Notification.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);*/
-
-        //como en la documentacion
-        /*NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this, Notifications.CHANNEL_ID)
-                //.setSmallIcon(R.drawable.notification_icon)
+   public void notifications(View v){
+        Notification notification = new NotificationCompat.Builder(MyGardenActivity.this, Notifications.CHANNEL_ID)
+                .setSmallIcon(R.drawable.ic_regadera_24px)
                 .setContentTitle("Reminder")
-                .setContentText("Watter your plant!")
+                .setContentText("Remember to watter your plant")
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-                // Set the intent that will fire when the user taps the notification
-                //.setContentIntent(pendingIntent)
-                .setAutoCancel(true)
-                .build();*/
-
-        //como en el video
-       /* Notification notification = new NotificationCompat.Builder(MyGardenActivity.this, Notifications.CHANNEL_ID)
-                //.setSmallIcon(R.drawable.ic_one)
-                .setContentTitle("Reminder")
-                .setContentText("Water your plant")
-                .setPriority(NotificationCompat.PRIORITY_HIGH)
-                .setCategory(NotificationCompat.CATEGORY_MESSAGE)
+                .setCategory(NotificationCompat.CATEGORY_REMINDER)
                 .build();
-
         notificationManager.notify(1, notification);
-
-        // notificationManager.notify(1, mBuilder.build());
-    }*/
+    }
 
 
 
