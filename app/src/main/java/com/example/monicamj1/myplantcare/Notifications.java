@@ -20,8 +20,6 @@ public class Notifications extends Application {
 
     }
 
-    //TODO: poner todo el tema de gestión de notificaciones aqui con la consulta a la db y el calculo de los dias restantes. Copiarlo de MyGarden
-
     private void createNotificationsChannel(){
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
             NotificationChannel channel = new NotificationChannel(

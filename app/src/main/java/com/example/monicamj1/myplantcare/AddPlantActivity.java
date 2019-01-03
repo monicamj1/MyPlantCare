@@ -213,16 +213,23 @@ public class AddPlantActivity extends AppCompatActivity {
     }
 
     public void addPlant(View view){
-        if (id_plant == -1) {
-            getFields();
-            new AddPlantActivity.InsertTask(plantDao).execute(plant);
-            setResult(RESULT_OK);
-            finish();
+        String reminder = wateringNumber_edit.getText().toString();
+        String name = plantName_edit.getText().toString();
+        if(reminder.matches("") ||  reminder.length() == 0 || name.matches("" ) || name.length() == 0){
+            Toast.makeText(this, "Reminder is empty", Toast.LENGTH_SHORT).show();
         } else {
-            getFields();
-            new AddPlantActivity.UpdatePlant(this,plantDao).execute(plant);
-            setResult(RESULT_OK);
-            finish();
+            if (id_plant == -1) {
+
+                getFields();
+                new AddPlantActivity.InsertTask(plantDao).execute(plant);
+                setResult(RESULT_OK);
+                finish();
+            } else {
+                getFields();
+                new AddPlantActivity.UpdatePlant(this, plantDao).execute(plant);
+                setResult(RESULT_OK);
+                finish();
+            }
         }
     }
 
