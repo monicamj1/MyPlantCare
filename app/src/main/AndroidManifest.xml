@@ -18,15 +18,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MyGardenActivity">
+        <activity android:name=".MyGardenActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".AddPlantActivity" />
-        <activity android:name=".MyPlantActivity" />
+        <activity android:name=".AddPlantActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".MyPlantActivity"
+            android:screenOrientation="portrait"/>
 
         <provider
             android:name="android.support.v4.content.FileProvider"
@@ -38,7 +41,8 @@
                 android:resource="@xml/file_paths" />
         </provider>
 
-        <activity android:name=".ShowImageActivity" ></activity>
+        <activity android:name=".ShowImageActivity"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>
