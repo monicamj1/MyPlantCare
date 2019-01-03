@@ -255,11 +255,12 @@
 
   <ImageButton
       android:id="@+id/watered_btn"
-      android:layout_width="75dp"
-      android:layout_height="75dp"
+      android:layout_width="65dp"
+      android:layout_height="65dp"
       android:layout_marginEnd="16dp"
       android:layout_marginRight="16dp"
       android:layout_marginTop="8dp"
+      android:cropToPadding="true"
       android:onClick="updateWatering"
       android:src="@drawable/ic_regadera_24px"
       app:layout_constraintEnd_toEndOf="parent"
