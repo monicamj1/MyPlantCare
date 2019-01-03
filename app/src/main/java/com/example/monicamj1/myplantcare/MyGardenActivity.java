@@ -1,6 +1,7 @@
 package com.example.monicamj1.myplantcare;
 
 import android.app.Notification;
+import android.app.PendingIntent;
 import android.arch.persistence.room.Room;
 import android.content.Intent;
 import android.graphics.Color;
@@ -207,6 +208,7 @@ public class MyGardenActivity extends AppCompatActivity {
             if(days <= 0){
                 days = 0;
                 days_view.setTextColor(ContextCompat.getColor(MyGardenActivity.this, R.color.Rosita));
+                notifications();
             }else{
                 days_view.setTextColor(ContextCompat.getColor(MyGardenActivity.this, R.color.Verde_Oscuro));
             }
@@ -236,17 +238,25 @@ public class MyGardenActivity extends AppCompatActivity {
     }
 
     //NOTIFICATION STUFF
-   public void notifications(View v){
+   public void notifications(){
+        Intent activityIntent = new Intent(this, MyGardenActivity.class);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, activityIntent, 0);
+
         Notification notification = new NotificationCompat.Builder(MyGardenActivity.this, Notifications.CHANNEL_ID)
                 .setSmallIcon(R.drawable.ic_regadera_24px)
-                .setContentTitle("Reminder")
-                .setContentText("Remember to watter your plant")
+                .setContentTitle("One of your plants needs some water! :O")
+                .setContentText("Tap to water it")
+                .setColor(ContextCompat.getColor(MyGardenActivity.this, R.color.Verde_Oscuro))
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .setCategory(NotificationCompat.CATEGORY_REMINDER)
+                .setContentIntent(pendingIntent)
+                .setAutoCancel(true)
+                .setOnlyAlertOnce(true)
                 .build();
-        notificationManager.notify(1, notification);
-    }
 
+        notificationManager.notify(1, notification);
+
+    }
 
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data){
