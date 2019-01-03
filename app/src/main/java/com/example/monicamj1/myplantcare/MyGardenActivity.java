@@ -20,6 +20,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -161,7 +162,7 @@ public class MyGardenActivity extends AppCompatActivity {
         TextView name_view;
         TextView reminder_view;
         TextView days_view;
-        Button watered_btn;
+        ImageButton watered_btn;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -209,7 +210,7 @@ public class MyGardenActivity extends AppCompatActivity {
                 days_view.setTextColor(ContextCompat.getColor(MyGardenActivity.this, R.color.Verde_Oscuro));
             }
             days_view.setText( days + " days");
-            watered_btn.setText("Watered");
+            //watered_btn.setText("Watered");
         }
     }
 
@@ -234,7 +235,7 @@ public class MyGardenActivity extends AppCompatActivity {
     }
 
     //NOTIFICATION STUFF
-    public void notifications(){
+   // public void notifications(){
         // Create an explicit intent for an Activity in your app
        /* Intent intent = new Intent(this, Notification.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -252,7 +253,7 @@ public class MyGardenActivity extends AppCompatActivity {
                 .build();*/
 
         //como en el video
-        Notification notification = new NotificationCompat.Builder(MyGardenActivity.this, Notifications.CHANNEL_ID)
+       /* Notification notification = new NotificationCompat.Builder(MyGardenActivity.this, Notifications.CHANNEL_ID)
                 //.setSmallIcon(R.drawable.ic_one)
                 .setContentTitle("Reminder")
                 .setContentText("Water your plant")
@@ -263,7 +264,7 @@ public class MyGardenActivity extends AppCompatActivity {
         notificationManager.notify(1, notification);
 
         // notificationManager.notify(1, mBuilder.build());
-    }
+    }*/
 
 
 
