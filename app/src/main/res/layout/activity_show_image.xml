@@ -27,6 +27,7 @@
         android:layout_marginTop="24dp"
         android:onClick="setNewProfile"
         android:text="Set as profile"
+        android:textColor="@color/Blanco"
         app:layout_constraintEnd_toStartOf="@+id/guideline"
         app:layout_constraintStart_toStartOf="@+id/previous_btn"
         app:layout_constraintTop_toBottomOf="@+id/previous_btn" />
@@ -40,6 +41,7 @@
         android:layout_marginTop="24dp"
         android:onClick="deleteImage"
         android:text="Delete"
+        android:textColor="@color/Blanco"
         app:layout_constraintEnd_toEndOf="@+id/following_btn"
         app:layout_constraintStart_toStartOf="@+id/guideline"
         app:layout_constraintTop_toBottomOf="@+id/following_btn" />
@@ -50,6 +52,7 @@
         android:layout_height="wrap_content"
         android:onClick="previousPic"
         android:text="@string/Previous"
+        android:textColor="@color/Blanco"
         app:layout_constraintEnd_toStartOf="@+id/guideline"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/bigImage_view" />
@@ -60,6 +63,7 @@
         android:layout_height="wrap_content"
         android:onClick="followingPic"
         android:text="@string/Following"
+        android:textColor="@color/Blanco"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/guideline"
         app:layout_constraintTop_toBottomOf="@+id/bigImage_view" />
