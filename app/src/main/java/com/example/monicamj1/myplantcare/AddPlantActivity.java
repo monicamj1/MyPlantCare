@@ -234,7 +234,7 @@ public class AddPlantActivity extends AppCompatActivity {
         String reminder = wateringNumber_edit.getText().toString();
         String name = plantName_edit.getText().toString();
         if(reminder.matches("") ||  reminder.length() == 0 || name.matches("" ) || name.length() == 0){
-            Toast.makeText(this, "Reminder is empty", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Please, fill with all the information", Toast.LENGTH_SHORT).show();
         } else {
             if (id_plant == -1) {
 
