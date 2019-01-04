@@ -390,7 +390,13 @@ public class MyPlantActivity extends AppCompatActivity {
                     }
                 })
                 .setNegativeButton(R.string.Cancel, null);
-        builder.create().show();
+
+        AlertDialog alert = builder.create();
+        alert.show();
+        Button nbutton = alert.getButton(DialogInterface.BUTTON_NEGATIVE);
+        nbutton.setTextColor(ContextCompat.getColor(MyPlantActivity.this, R.color.Verde_Medio));
+        Button pbutton = alert.getButton(DialogInterface.BUTTON_POSITIVE);
+        pbutton.setTextColor(ContextCompat.getColor(MyPlantActivity.this, R.color.Rosita));
     }
 
 
