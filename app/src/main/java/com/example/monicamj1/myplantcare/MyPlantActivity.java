@@ -75,6 +75,8 @@ public class MyPlantActivity extends AppCompatActivity {
     AppDatabase db;
     DAO_myPlant plantDao;
 
+    SimpleDateFormat fmt = new SimpleDateFormat("dd-MM-yyyy");
+
     public static final int EDIT_PLANT = 1;
 
     static final int REQUEST_IMAGE_CAPTURE = 10;
@@ -165,7 +167,7 @@ public class MyPlantActivity extends AppCompatActivity {
 
         namePlant.setText(plant.getName());
         specieName.setText(plant.getScientific_name());
-        birthday.setText(String.format("%1$te-%1$tm-%1$tY", plant.getBirthday()));
+        birthday.setText(fmt.format(plant.getBirthday()));
         Date now = new Date();
         Date last = plant.getLast_watering_day();
         long diffTime = now.getTime() - last.getTime();
