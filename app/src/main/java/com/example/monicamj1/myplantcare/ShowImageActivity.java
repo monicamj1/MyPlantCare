@@ -1,8 +1,11 @@
 package com.example.monicamj1.myplantcare;
 
+import android.app.AlertDialog;
 import android.arch.persistence.room.Room;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -132,15 +135,35 @@ public class ShowImageActivity extends AppCompatActivity {
     }
 
     public void deleteImage(View view){
-        List<String> list = new ArrayList<>();
-        for(int i=0; i<gallery_images.size();i++){
-            if(i != pos) {
-                list.add(gallery_images.get(i));
-            }
-        }
-        myPlant.setImages_url(list);
-        new ShowImageActivity.UpdatePlant(this, plantDao).execute(myPlant);
+        alertDelete();
+    }
 
+    public void alertDelete(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+        builder.setTitle(R.string.Confirm)
+                .setMessage("Do yo want to delete the image?")
+                .setPositiveButton(R.string.Delete, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int j) {
+                        List<String> list = new ArrayList<>();
+                        for(int i=0; i<gallery_images.size();i++){
+                            if(i != pos) {
+                                list.add(gallery_images.get(i));
+                            }
+                        }
+                        myPlant.setImages_url(list);
+                        new ShowImageActivity.UpdatePlant(ShowImageActivity.this, plantDao).execute(myPlant);
+                    }
+                })
+                .setNegativeButton(R.string.Cancel, null);
+
+        AlertDialog alert = builder.create();
+        alert.show();
+        Button nbutton = alert.getButton(DialogInterface.BUTTON_NEGATIVE);
+        nbutton.setTextColor(ContextCompat.getColor(ShowImageActivity.this, R.color.Verde_Medio));
+        Button pbutton = alert.getButton(DialogInterface.BUTTON_POSITIVE);
+        pbutton.setTextColor(ContextCompat.getColor(ShowImageActivity.this, R.color.Rosita));
     }
 
     public void previousPic(View view){
