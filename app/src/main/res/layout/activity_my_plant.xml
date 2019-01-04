@@ -68,7 +68,7 @@
       android:layout_marginLeft="48dp"
       android:layout_marginRight="8dp"
       android:layout_marginStart="48dp"
-      android:layout_marginTop="28dp"
+      android:layout_marginTop="24dp"
       android:text="@string/Birthday"
       android:textColor="@color/Verde_Claro"
       android:textSize="14sp"
@@ -155,28 +155,16 @@
       app:layout_constraintTop_toBottomOf="@+id/galleryTitle" />
 
   <TextView
-      android:id="@+id/wateringTitle"
+      android:id="@+id/watering_view"
       android:layout_width="0dp"
       android:layout_height="wrap_content"
       android:layout_marginLeft="16dp"
       android:layout_marginStart="16dp"
-      android:layout_marginTop="8dp"
-
-      android:textColor="@color/Verde_Oscuro"
-      app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toBottomOf="@+id/rule1" />
-
-  <TextView
-      android:id="@+id/watering_view"
-      android:layout_width="0dp"
-      android:layout_height="wrap_content"
-      android:layout_marginLeft="8dp"
-      android:layout_marginStart="8dp"
-      android:layout_marginTop="8dp"
+      android:layout_marginTop="16dp"
       android:text="88 days"
       android:textColor="@color/Verde_Oscuro"
       android:textSize="18sp"
-      app:layout_constraintStart_toEndOf="@+id/wateringTitle"
+      app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toBottomOf="@+id/rule1"
       tools:text="3 days" />
 
@@ -184,14 +172,14 @@
       android:id="@+id/waterEveryTitle"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:layout_marginLeft="24dp"
-      android:layout_marginStart="24dp"
-      android:layout_marginTop="16dp"
+      android:layout_marginLeft="16dp"
+      android:layout_marginStart="16dp"
+      android:layout_marginTop="8dp"
       android:text="@string/WaterEveryXDay1"
       android:textColor="@color/Verde_Medio"
       android:textSize="14sp"
       app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toBottomOf="@+id/wateringTitle"
+      app:layout_constraintTop_toBottomOf="@+id/watering_view"
       tools:text="Water every " />
 
   <TextView
@@ -230,7 +218,7 @@
       android:layout_marginLeft="16dp"
       android:layout_marginRight="16dp"
       android:layout_marginStart="16dp"
-      android:layout_marginTop="24dp"
+      android:layout_marginTop="32dp"
       android:text="@string/Gallery"
       android:textColor="@color/Verde_Claro"
       android:textSize="14sp"
@@ -244,7 +232,7 @@
       android:layout_height="65dp"
       android:layout_marginEnd="16dp"
       android:layout_marginRight="16dp"
-      android:layout_marginTop="8dp"
+      android:layout_marginTop="16dp"
       android:adjustViewBounds="false"
       android:cropToPadding="true"
       android:onClick="updateWatering"
