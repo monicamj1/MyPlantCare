@@ -136,7 +136,7 @@ public class AddPlantActivity extends AppCompatActivity {
     }
 
     private void setPlantFields(Plant plant){
-        setNow();
+       // setNow();
         plantName_edit.setText(plant.getName());
         wateringNumber_edit.setText(Integer.toString(plant.getReminder()));
         birthDate_edit.setText(fmt.format(plant.getBirthday()));
@@ -151,7 +151,7 @@ public class AddPlantActivity extends AppCompatActivity {
         birthdate_month = month-1;
         birthdate_year = year;
 
-        String[] lastWatering = fmt.format(plant.getBirthday()).split("/");
+        String[] lastWatering = fmt.format(plant.getLast_watering_day()).split("/");
         day = Integer.valueOf(lastWatering[0]);
         month = Integer.valueOf(lastWatering[1]);
         year = Integer.valueOf(lastWatering[2]);
