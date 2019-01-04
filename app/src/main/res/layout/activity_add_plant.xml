@@ -97,12 +97,13 @@
 
     <TextView
         android:id="@+id/waterEvery_view"
-        android:layout_width="78dp"
+        android:layout_width="101dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="24dp"
         android:layout_marginStart="24dp"
         android:layout_marginTop="16dp"
         android:text="@string/WaterEveryXDay1"
+        android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/wateringReminder_view" />
 
@@ -113,6 +114,7 @@
         android:layout_marginLeft="8dp"
         android:layout_marginStart="8dp"
         android:text="@string/WaterEveryXDay2"
+        android:textSize="18sp"
         app:layout_constraintBaseline_toBaselineOf="@+id/waterEvery_view"
         app:layout_constraintStart_toEndOf="@+id/wateringNumber_edit" />
 
@@ -161,9 +163,9 @@
         android:layout_marginLeft="16dp"
         android:layout_marginStart="16dp"
         android:text="88/88/8888"
-        app:layout_constraintBottom_toBottomOf="@+id/birthday_view"
-        app:layout_constraintStart_toEndOf="@+id/birthday_view"
-        app:layout_constraintTop_toTopOf="@+id/birthday_view" />
+        android:textSize="18sp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/birthday_view"
+        app:layout_constraintStart_toEndOf="@+id/birthday_view" />
 
     <TextView
         android:id="@+id/lastWateringDate_view"
@@ -172,6 +174,7 @@
         android:layout_marginLeft="16dp"
         android:layout_marginStart="16dp"
         android:text="88/88/8888"
+        android:textSize="18sp"
         app:layout_constraintBaseline_toBaselineOf="@+id/lasTime_view"
         app:layout_constraintStart_toEndOf="@+id/lasTime_view" />
 
