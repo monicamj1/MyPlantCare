@@ -136,11 +136,29 @@ public class AddPlantActivity extends AppCompatActivity {
     }
 
     private void setPlantFields(Plant plant){
-        //setNow();
+        setNow();
         plantName_edit.setText(plant.getName());
         wateringNumber_edit.setText(Integer.toString(plant.getReminder()));
         birthDate_edit.setText(fmt.format(plant.getBirthday()));
         lastWateringDate_edit.setText(fmt.format(plant.getLast_watering_day()));
+
+        //Fechas según la planta recogida
+        String[] birthday = fmt.format(plant.getBirthday()).split("/");
+        int day = Integer.valueOf(birthday[0]);
+        int month = Integer.valueOf(birthday[1]);
+        int year = Integer.valueOf(birthday[2]);
+        birthdate_dayOfMonth = day;
+        birthdate_month = month-1;
+        birthdate_year = year;
+
+        String[] lastWatering = fmt.format(plant.getBirthday()).split("/");
+        day = Integer.valueOf(lastWatering[0]);
+        month = Integer.valueOf(lastWatering[1]);
+        year = Integer.valueOf(lastWatering[2]);
+        waterdate_dayOfMonth = day;
+        waterdate_month = month-1;
+        waterdate_year = year;
+
         url.addAll(plant.getImages_url());
         profile = plant.getProfile();
 
